@@ -56,9 +56,9 @@
     <Compile Include="DatabaseAccessService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DemoApp.Persistence.Common\DemoApp.Persistence.Common.csproj">
+    <ProjectReference Include="..\DemoApp.Persistence.Common\MapDiagram.Persistence.Common.csproj">
       <Project>{91AD5A26-30A4-438C-B4F0-D0DCF92140A9}</Project>
-      <Name>DemoApp.Persistence.Common</Name>
+      <Name>MapDiagram.Persistence.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

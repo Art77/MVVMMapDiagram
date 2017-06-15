@@ -41,13 +41,13 @@ public class FullyCreatedLineGroupConnectorInfo : ConnectorInfoBase
 {
     private bool showConnectors = false;
 
-    public FullyCreatedLineGroupConnectorInfo(LineGroupItemViewModelBase dataItem, ConnectorOrientation orientation)
+    public FullyCreatedLineGroupConnectorInfo(LineGroupItemViewModel dataItem, ConnectorOrientation orientation)
         : base(orientation)
     {
         this.DataItem = dataItem;
     }
 
-    public LineGroupItemViewModelBase DataItem { get; private set; }
+    public LineGroupItemViewModel DataItem { get; private set; }
 
     public bool ShowConnectors
     {

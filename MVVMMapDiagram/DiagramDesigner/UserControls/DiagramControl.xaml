@@ -1,42 +1,88 @@
 ﻿<UserControl x:Class="DiagramDesigner.DiagramControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:g="http://www.galasoft.ch/mvvmlight"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:s="clr-namespace:DiagramDesigner"
              xmlns:c="clr-namespace:DiagramDesigner.Controls"
-             mc:Ignorable="d" 
+             xmlns:map="clr-namespace:GCityDoor.MapControl;assembly=GCityDors.MapControl"
+             xmlns:gmap="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
+             mc:Ignorable="d"     x:Name="win"     
              d:DesignHeight="300" d:DesignWidth="300">
+
     <Border BorderBrush="LightGray"
             BorderThickness="1">
-
         <Grid>
-            <ScrollViewer Name="DesignerScrollViewer"
-                          Background="Transparent"
-                          HorizontalScrollBarVisibility="Auto"
-                          VerticalScrollBarVisibility="Auto">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+             <!--<map:MapCanvas Name="map" Mode="Mouse" Visibility="Collapsed"
+                           MinZoom="{Binding ElementName=zoomBorder, Path=MinZoom}"
+                           Zoom="{Binding ElementName=zoomBorder, Path=Zoom, Mode=OneWay,
+                                    UpdateSourceTrigger=PropertyChanged}"/>-->
 
-                <ItemsControl ItemsSource="{Binding Items}"
+
+            <!--<s:ZoomBorder x:Name="zoomBorder" AutoFitMode="Fill" ZoomSpeed="2" ClipToBounds="True"
+                            VerticalAlignment="Stretch" 
+                            HorizontalAlignment="Stretch"
+                            MouseRightButtonDown="zoomBorder_MouseRightButtonDown"
+                            MouseRightButtonUp="zoomBorder_MouseRightButtonUp"
+                            MouseWheel="zoom_MouseWheel"
+                            MouseMove="MouseMoveAll"
+                            Zoom="16"
+                            MinZoom="5"
+                            MaxZoom="18"
+                            AllowDrop="True"/>-->
+
+            <ItemsControl ItemsSource="{Binding Items}"
                                 ItemContainerStyleSelector="{x:Static s:DesignerItemsControlItemStyleSelector.Instance}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <s:DesignerCanvas Loaded="DesignerCanvas_Loaded"
-                                                MinHeight="800"
-                                                MinWidth="1000"
-                                                AllowDrop="True">
-                            </s:DesignerCanvas>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                </ItemsControl>
-            </ScrollViewer>
-            <s:ZoomBox x:Name="zoomBox"
-                       Width="180"
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <s:DesignerCanvas Loaded="DesignerCanvas_Loaded"
+                                                  MinHeight="1800"
+                                                  MinWidth="1800"
+                                                  Background="Transparent"
+                                                  HorizontalAlignment="Stretch"
+                                                  VerticalAlignment="Stretch"
+                                                  AllowDrop="True">
+                        </s:DesignerCanvas>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+
+
+
+
+            <Grid Grid.Row="3" HorizontalAlignment="Right" Background="#FFCF5B41">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+
+                <TextBlock Grid.Column="0" Text="ZoomNet: " Background="#FF57E849" Width="55"></TextBlock>
+                <TextBlock Grid.Column="1" HorizontalAlignment="Center"
+                       Text="{Binding ElementName=zoomBorder, Path=Zoom, UpdateSourceTrigger=PropertyChanged}"
+                       Width="60" Background="#FF57E849"></TextBlock>
+
+                <TextBlock Grid.Column="2" Text="ZoomMap: " Background="#FFFFB97F" Width="60"></TextBlock>
+                <TextBlock Grid.Column="3" 
+                       Text="{Binding ElementName=map, Path=Zoom, UpdateSourceTrigger=PropertyChanged}" 
+                       Width="50" Background="#FFFFB97F"></TextBlock>
+            </Grid>
+
+
+            <!--<s:ZoomBox Grid.Column="2" x:Name="zoomBox" Visibility="Hidden"
+                       Width="180" StepZoom="10"
                        HorizontalAlignment="Right"
                        VerticalAlignment="Top"
                        ScrollViewer="{Binding ElementName=DesignerScrollViewer}"
-                       Margin="0,5,25,0" />
-
-
+                       Margin="0,5,25,0" />-->
         </Grid>
     </Border>
 </UserControl>

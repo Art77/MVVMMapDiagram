@@ -124,13 +124,13 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DemoApp.Persistence.Common\DemoApp.Persistence.Common.csproj">
+    <ProjectReference Include="..\DemoApp.Persistence.Common\MapDiagram.Persistence.Common.csproj">
       <Project>{91AD5A26-30A4-438C-B4F0-D0DCF92140A9}</Project>
-      <Name>DemoApp.Persistence.Common</Name>
+      <Name>MapDiagram.Persistence.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DemoApp.Persistence.RavenDB\DemoApp.Persistence.RavenDB.csproj">
+    <ProjectReference Include="..\DemoApp.Persistence.RavenDB\MapDiagram.Persistence.RavenDB.csproj">
       <Project>{9B198EC8-182F-44C8-8E4E-2060472467E4}</Project>
-      <Name>DemoApp.Persistence.RavenDB</Name>
+      <Name>MapDiagram.Persistence.RavenDB</Name>
     </ProjectReference>
     <ProjectReference Include="..\DiagramDesigner\DiagramDesigner.csproj">
       <Project>{74872A86-6809-476B-95AB-6F3512317059}</Project>

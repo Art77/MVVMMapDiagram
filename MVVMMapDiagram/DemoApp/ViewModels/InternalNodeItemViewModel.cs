@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace DemoApp
 {
-    public class InternalNodeItemViewModel : InternalNodeItemViewModelBase, ISupportDataChanges
+    public class InternalNodeItemViewModel : DiagramDesigner.InternalNodeItemViewModel, ISupportDataChanges
     {
         private IUIVisualizerService visualiserService;
 

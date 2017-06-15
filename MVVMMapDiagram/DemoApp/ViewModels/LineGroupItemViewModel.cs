@@ -7,22 +7,17 @@ using System.Windows.Input;
 
 namespace DemoApp
 {
-    public class LineGroupItemViewModel : LineGroupItemViewModelBase, ISupportDataChanges
+    public class LineGItemViewModel : LineGroupItemViewModel, ISupportDataChanges
     {
         private IUIVisualizerService visualiserService;
 
-        public LineGroupItemViewModel(int id, IDiagramViewModel parent, string hostUrl) : base(id,parent)
+        public LineGItemViewModel(int id, IDiagramViewModel parent, double left, double top, string hostUrl) : base(id, parent, left, top)
         {
             this.HostUrl = hostUrl;
-            Init();
+            Init_();
         }
 
-        public LineGroupItemViewModel() : base()
-        {
-            Init();
-        }
-
-
+       
         public String HostUrl { get; set; }
         public ICommand ShowDataChangeWindowCommand { get; private set; }
 
@@ -36,7 +31,7 @@ namespace DemoApp
         }
 
 
-        private void Init()
+        private void Init_()
         {
             visualiserService = ApplicationServicesProvider.Instance.Provider.VisualizerService;
             ShowDataChangeWindowCommand = new SimpleCommand(ExecuteShowDataChangeWindowCommand);

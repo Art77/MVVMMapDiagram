@@ -2,47 +2,63 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace DiagramDesigner.Controls
 {
     public class DragThumb : Thumb
     {
-        public DragThumb()
+        private Point point;
+        private DesignerCanvas parent { get; set; }
+
+        protected override void OnMouseUp(MouseButtonEventArgs e)
         {
-            base.DragDelta += new DragDeltaEventHandler(DragThumb_DragDelta);
+            base.OnMouseUp(e);
+            parent = null;
+            Mouse.Capture(null);
         }
 
-        void DragThumb_DragDelta(object sender, DragDeltaEventArgs e)
+        private DesignerCanvas GetParent(DependencyObject element)
         {
+            while (element != null && !(element is DesignerCanvas))
+                element = VisualTreeHelper.GetParent(element);
+
+            return element as DesignerCanvas;
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
             DesignerItemViewModelBase designerItem = this.DataContext as DesignerItemViewModelBase;
-
-            if (designerItem != null && designerItem.IsSelected)
-            {
-                //double minLeft = double.MaxValue;
-                //double minTop = double.MaxValue;
-
-                // we only move DesignerItems
-                var designerItems = designerItem.SelectedItems;
-
-                foreach (DesignerItemViewModelBase item in designerItems.OfType<DesignerItemViewModelBase>())
+            if (e.LeftButton == MouseButtonState.Pressed)
+                if (designerItem != null && designerItem.IsSelected)
                 {
-                    //double left = item.Left;
-                    //double top = item.Top;
-                    //minLeft = double.IsNaN(left) ? 0 : Math.Min(left, minLeft);
-                    //minTop = double.IsNaN(top) ? 0 : Math.Min(top, minTop);
+                    var designerItems = designerItem.SelectedItems;
+                    var position = e.GetPosition(parent);
+                    var delta = new Point(position.X - point.X, position.Y - point.Y);
 
-                    //double deltaHorizontal = Math.Max(-minLeft, e.HorizontalChange);
-                    //double deltaVertical = Math.Max(-minTop, e.VerticalChange);
-                    //item.Left += deltaHorizontal;
-                    //item.Top += deltaVertical;
-                    item.Left += e.HorizontalChange;
-                    item.Top += e.VerticalChange;
+                    foreach (DesignerItemViewModelBase item in designerItems.OfType<DesignerItemViewModelBase>())
+                    {
+
+                        item.Left += delta.X;
+                        item.Top += delta.Y;
+                    }
+                    point = position;
                 }
-                e.Handled = true;
-            }
         }
+
+        protected override void OnMouseDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseDown(e);
+
+            parent = GetParent(this);
+            point = e.GetPosition(parent);
+            Mouse.Capture(this);
+        }
+
     }
 }

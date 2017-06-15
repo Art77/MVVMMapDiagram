@@ -27,7 +27,7 @@ namespace DiagramDesigner
             if (itemsControl == null)
                 throw new InvalidOperationException("DesignerItemsControlItemStyleSelector : Could not find ItemsControl");
 
-            if (item is InternalNodeItemViewModelBase)
+            if (item is InternalNodeItemViewModel)
             {
                 return (Style)itemsControl.FindResource("twoConnectStyle");
             }
@@ -42,14 +42,9 @@ namespace DiagramDesigner
                 return (Style)itemsControl.FindResource("edgeStyle");
             }
 
-            if (item is LineGroupItemViewModelBase)
+            if (item is LineGroupItemViewModel)
             {
                 return (Style)itemsControl.FindResource("lineGroupStyle");
-            }
-
-            if (item is ConnectorLineGroupViewModel)
-            {
-                return (Style)itemsControl.FindResource("edgeLineGroupStyle");
             }
 
             return null;
