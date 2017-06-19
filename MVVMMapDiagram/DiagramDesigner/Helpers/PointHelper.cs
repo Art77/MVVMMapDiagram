@@ -18,7 +18,7 @@ namespace DiagramDesigner
         public static Point GetPointForConnector(FullyCreatedConnectorInfo connector)
         {
             Point point = new Point();
-
+            //Point point = new Point(connector.DataItem.Left, connector.DataItem.Top);
             switch (connector.Orientation)
             {
                 case ConnectorOrientation.Top:
@@ -34,8 +34,12 @@ namespace DiagramDesigner
                     point = new Point(connector.DataItem.Left, connector.DataItem.Top + (connector.DataItem.ItemHeight / 2));
                     break;
             }
-            
-            return new RotateTransform(connector.DataItem.Angle, connector.DataItem.Left, connector.DataItem.Top).Transform(point);
+            var resPoint = new RotateTransform(connector.DataItem.Angle, connector.DataItem.Left + (connector.DataItem.ItemWidth * 0.5),
+                connector.DataItem.Top + (connector.DataItem.ItemHeight * 0.5));
+
+            var pointTrans = resPoint.Transform(point);
+            resPoint.CenterY = 0; resPoint.CenterX = 0;
+            return pointTrans;
         }
 
 

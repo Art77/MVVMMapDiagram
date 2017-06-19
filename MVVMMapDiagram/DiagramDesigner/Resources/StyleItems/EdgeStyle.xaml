@@ -18,7 +18,7 @@
         <Setter Property="ContentTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <Canvas Margin="0" Background="Aquamarine" ClipToBounds="False"
+                    <Canvas Margin="0" ClipToBounds="False"
                                     x:Name="selectedGrid"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch">
@@ -27,10 +27,9 @@
                                     Points="{Binding Path=ConnectionPoints, Converter={x:Static s:ConnectionPathConverter.Instance}}"
                                     StrokeThickness="2" />
 
-
-                        <Path x:Name="arrow"
+                        <!--Visibility="{Binding Path=IsFullConnection, Converter={x:Static s:BoolToVisibilityConverter.Instance}}"-->
+                        <Path x:Name="arrow" Visibility="Hidden"
                                     Data="M0,10 L5,0 10,10 z"
-                                    Visibility="{Binding Path=IsFullConnection, Converter={x:Static s:BoolToVisibilityConverter.Instance}}"
                                     Fill="Gray"
                                     HorizontalAlignment="Left"
                                     Height="10"

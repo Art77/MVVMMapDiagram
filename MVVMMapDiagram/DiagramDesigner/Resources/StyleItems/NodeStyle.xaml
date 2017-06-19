@@ -1,6 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:s="clr-namespace:DiagramDesigner"
+                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                    xmlns:cmd="http://www.galasoft.ch/mvvmlight"
                     xmlns:c="clr-namespace:DiagramDesigner.Controls">
 
     <Style x:Key="designerItemStyle"
@@ -27,11 +29,15 @@
                     <Grid x:Name="selectedGrid">
                    
                         <Grid>
+                            
                             <Grid.RenderTransform>
                                 <RotateTransform Angle="{Binding Angle}" 
                                                  CenterX="{Binding CenterX}"
                                                  CenterY="{Binding CenterY}"/>
                             </Grid.RenderTransform>
+                            
+                            
+                            
                             
                              <c:DragThumb x:Name="PART_DragThumb" Background="Transparent"
                                                             Cursor="SizeAll" />
