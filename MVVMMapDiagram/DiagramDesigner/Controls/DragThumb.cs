@@ -43,7 +43,6 @@ namespace DiagramDesigner.Controls
 
                     foreach (DesignerItemViewModelBase item in designerItems.OfType<DesignerItemViewModelBase>())
                     {
-
                         item.Left += delta.X;
                         item.Top += delta.Y;
                     }

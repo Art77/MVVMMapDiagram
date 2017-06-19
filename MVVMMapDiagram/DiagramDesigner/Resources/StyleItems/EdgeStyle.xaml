@@ -2,49 +2,115 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:s="clr-namespace:DiagramDesigner"
                     xmlns:c="clr-namespace:DiagramDesigner.Controls">
-    
+
     <Style x:Key="connectorItemStyle"
-           TargetType="{x:Type ContentPresenter}">
+                TargetType="{x:Type ContentPresenter}">
         <Setter Property="Width"
-           Value="{Binding Area.Width}" />
+                Value="{Binding Area.Width}" />
         <Setter Property="Height"
-            Value="{Binding Area.Height}" />
+                Value="{Binding Area.Height}" />
         <Setter Property="Canvas.Top"
-             Value="{Binding Area.Top}" />
+                Value="{Binding Area.Top}" />
         <Setter Property="Canvas.Left"
-            Value="{Binding Area.Left}" />
+                Value="{Binding Area.Left}" />
         <Setter Property="s:SelectionProps.EnabledForSelection"
-              Value="True" />
+                Value="True" />
         <Setter Property="ContentTemplate">
             <Setter.Value>
-
                 <DataTemplate>
-                    <Canvas>
+                    <Canvas Margin="0" Background="Aquamarine" ClipToBounds="False"
+                                    x:Name="selectedGrid"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch">
+                        <Polyline x:Name="poly"
+                                    Stroke="Gray"
+                                    Points="{Binding Path=ConnectionPoints, Converter={x:Static s:ConnectionPathConverter.Instance}}"
+                                    StrokeThickness="2" />
 
-                        <!--SupporPaneltSegment="{Binding Path=DataContext.Segment, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged,
-                                                RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Canvas}}}"-->
-                        <c:RoundedCornersPolygon x:Name="PART_Connector"
-                                                Stroke="Black"
-                                                StrokeThickness="1"
-                                                UseRoundnessPercentage="True"
-                                                Fill="Transparent"
-                                                ConfinesPoints="{Binding Path=ConnectionPoints, 
-                                                                        Converter={x:Static s:ConnectionPathConverter.Instance}}"                                                             
-                                                Visibility="{Binding Path=VisibilityEdge, 
-                                                                        Converter={x:Static s:BoolToVisibilityConverter.Instance}}">
 
-                            <!--<i:Interaction.Triggers>
-                                <i:EventTrigger EventName="UpSegment">
-                                    <g:EventToCommand Command="{Binding Path=GeneralSegmentCommand}"
-                                                                          CommandParameter="{Binding ElementName=PART_Connector, Path=SegmentLinked}"></g:EventToCommand>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>-->
-                        </c:RoundedCornersPolygon>
-
+                        <Path x:Name="arrow"
+                                    Data="M0,10 L5,0 10,10 z"
+                                    Visibility="{Binding Path=IsFullConnection, Converter={x:Static s:BoolToVisibilityConverter.Instance}}"
+                                    Fill="Gray"
+                                    HorizontalAlignment="Left"
+                                    Height="10"
+                                    Canvas.Left="{Binding EndPoint.X}"
+                                    Canvas.Top="{Binding EndPoint.Y}"
+                                    Stretch="Fill"
+                                    Stroke="Gray"
+                                    VerticalAlignment="Top"
+                                    Width="10"
+                                    RenderTransformOrigin="0.5,0.5">
+                            <Path.RenderTransform>
+                                <RotateTransform x:Name="rot" />
+                            </Path.RenderTransform>
+                        </Path>
                     </Canvas>
-
+                    <DataTemplate.Triggers>
+                        <DataTrigger Value="True"
+                                    Binding="{Binding IsSelected}">
+                            <Setter TargetName="poly"
+                                    Property="Stroke"
+                                    Value="Black" />
+                            <Setter TargetName="arrow"
+                                    Property="Stroke"
+                                    Value="Black" />
+                            <Setter TargetName="arrow"
+                                    Property="Fill"
+                                    Value="Black" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=SinkConnectorInfo.Orientation}"
+                                    Value="Left">
+                            <Setter TargetName="arrow"
+                                    Property="Margin"
+                                    Value="-15,-5,0,0" />
+                            <Setter TargetName="arrow"
+                                Property="RenderTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="90" />
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=SinkConnectorInfo.Orientation}"
+                                                            Value="Top">
+                            <Setter TargetName="arrow"
+                                    Property="Margin"
+                                    Value="-5,-15,0,0" />
+                            <Setter TargetName="arrow"
+                                     Property="RenderTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="180" />
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=SinkConnectorInfo.Orientation}"
+                                    Value="Right">
+                            <Setter TargetName="arrow"
+                                    Property="Margin"
+                                    Value="5,-5,0,0" />
+                            <Setter TargetName="arrow"
+                                    Property="RenderTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="-90" />
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=SinkConnectorInfo.Orientation}"
+                                                            Value="Bottom">
+                            <Setter TargetName="arrow"
+                                    Property="Margin"
+                                    Value="-5,10,0,0" />
+                            <Setter TargetName="arrow"
+                                   Property="RenderTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="0" />
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
                 </DataTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+
 </ResourceDictionary>

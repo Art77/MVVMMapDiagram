@@ -33,7 +33,7 @@
                                                  CenterY="{Binding CenterY}"/>
                             </Grid.RenderTransform>
                             
-                                 <c:DragThumb x:Name="PART_DragThumb" Background="Transparent"
+                             <c:DragThumb x:Name="PART_DragThumb" Background="Transparent"
                                                             Cursor="SizeAll" />
                             
                             <ContentPresenter x:Name="PART_ContentPresenter"
@@ -41,7 +41,12 @@
                                                                 VerticalAlignment="Stretch"
                                                                 Content="{TemplateBinding Content}" />
 
-                            <!--<c:ResizeThumb Margin="-5" VerticalAlignment="Top"
+                            <c:RotateThumb Width="7" Height="7" Margin="0,-20,0,0"
+                                  VerticalAlignment="Top" HorizontalAlignment="Center" Cursor="Hand"
+                                             Visibility="{Binding Path=IsSelected, 
+                                                Converter={x:Static s:BoolToVisibilityConverter.Instance}}" />
+
+                            <c:ResizeThumb Margin="-5" VerticalAlignment="Top"
                                                 HorizontalAlignment="Left"
                                                 Visibility="{Binding Path=IsSelected, 
                                                 Converter={x:Static s:BoolToVisibilityConverter.Instance}}" />
@@ -59,7 +64,7 @@
                             <c:ResizeThumb Margin="-5" VerticalAlignment="Bottom"
                                                 HorizontalAlignment="Right"
                                                 Visibility="{Binding Path=IsSelected, 
-                                                Converter={x:Static s:BoolToVisibilityConverter.Instance}}" />-->
+                                                Converter={x:Static s:BoolToVisibilityConverter.Instance}}" />
 
 
                             <Grid x:Name="PART_ConnectorDecorator">
@@ -160,6 +165,14 @@
                                HorizontalAlignment="Stretch"
                                VerticalAlignment="Stretch"
                                Content="{TemplateBinding Content}" />
+
+
+                            <c:RotateThumb Width="7" Height="7" Margin="0,-20,0,0"
+                                  VerticalAlignment="Top" HorizontalAlignment="Center" Cursor="Hand"
+                                             Visibility="{Binding Path=IsSelected, 
+                                                Converter={x:Static s:BoolToVisibilityConverter.Instance}}" />
+                                           
+
 
                             <c:ResizeThumb Margin="-5" VerticalAlignment="Top"
                                                 HorizontalAlignment="Left"

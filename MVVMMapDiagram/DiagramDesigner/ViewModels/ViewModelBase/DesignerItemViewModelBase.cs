@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
+using System.Windows.Media;
+using GalaSoft.MvvmLight.CommandWpf;
+using System.Windows.Controls;
+using System.Windows;
 
 namespace DiagramDesigner
 {
 
+
     public abstract class DesignerItemViewModelBase : SelectableDesignerItemViewModelBase
     {
+        #region Private variables
         private double left;
         private double top;
         private bool showConnectors = false;
@@ -18,6 +24,23 @@ namespace DiagramDesigner
         private double itemWidth = 65;
         private double itemHeight = 65;
 
+        double centerX = 0d;
+        double centerY = 0d;
+        private Transform transform;
+
+        #endregion
+
+
+        private DesignerCanvas GetDesignerCanvas(DependencyObject element)
+        {
+            while (element != null && !(element is DesignerCanvas))
+                element = VisualTreeHelper.GetParent(element);
+            return element as DesignerCanvas;
+        }
+
+
+        //public RelayCommand<RotateTransform> UpRotateTransform { get; private set; }
+
         public DesignerItemViewModelBase(int id, IDiagramViewModel parent, double left, double top) : base(id, parent)
         {
             this.left = left;
@@ -25,11 +48,14 @@ namespace DiagramDesigner
             Init();
         }
 
+
+
         public DesignerItemViewModelBase(): base()
         {
             Init();
         }
 
+       
 
         public virtual FullyCreatedConnectorInfo TopConnector
         {
@@ -62,6 +88,7 @@ namespace DiagramDesigner
                 if(itemWidth != value)
                 {
                     itemWidth = value;
+                    CenterX = value * 0.5;
                     NotifyChanged("ItemWidth");
                 }
             }
@@ -75,6 +102,7 @@ namespace DiagramDesigner
                 if(itemHeight != value)
                 {
                     itemHeight = value;
+                    CenterY = value * 0.5;
                     NotifyChanged("ItemHeight");
                 }
             }
@@ -93,17 +121,32 @@ namespace DiagramDesigner
             }
         }
 
-
+        
         public double CenterX
         {
-            get { return this.itemWidth / 2; }
+            get { return (centerX == 0d) ? itemWidth * 0.5 : centerX; }
+            set
+            {
+                if (centerX != value)
+                {
+                    centerX = value;
+                    NotifyChanged("CenterX");
+                }
+            }
         }
 
         public double CenterY
         {
-            get { return this.itemHeight / 2; }
+            get { return (centerY == 0d) ? itemHeight * 0.5 : centerY; }
+            set
+            {
+                if (centerY != value)
+                {
+                    centerY = value;
+                    NotifyChanged("CenterY");
+                }
+            }
         }
-
         public virtual bool ShowConnectors
         {
             get
@@ -156,7 +199,6 @@ namespace DiagramDesigner
                 }
             }
         }
-
 
 
         protected virtual void Init()

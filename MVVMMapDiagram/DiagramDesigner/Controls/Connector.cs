@@ -29,10 +29,8 @@ namespace DiagramDesigner
         {
             while (element != null && !(element is DesignerCanvas))
                 element = VisualTreeHelper.GetParent(element);
-
             return element as DesignerCanvas;
         }
-
     }
 
 

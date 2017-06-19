@@ -29,22 +29,22 @@ namespace DiagramDesigner
 
             if (item is InternalNodeItemViewModel)
             {
-                return (Style)itemsControl.FindResource("twoConnectStyle");
+                return (Style)itemsControl.FindResource("interNodeItemStyle");
             }
 
             if (item is DesignerItemViewModelBase)
             {
-                return (Style)itemsControl.FindResource("fourConnectStyle");
+                return (Style)itemsControl.FindResource("designerItemStyle");
             }
 
             if (item is ConnectorViewModel)
             {
-                return (Style)itemsControl.FindResource("edgeStyle");
+                return (Style)itemsControl.FindResource("connectorItemStyle");
             }
 
             if (item is LineGroupItemViewModel)
             {
-                return (Style)itemsControl.FindResource("lineGroupStyle");
+                return (Style)itemsControl.FindResource("lineGroupItemStyle");
             }
 
             return null;

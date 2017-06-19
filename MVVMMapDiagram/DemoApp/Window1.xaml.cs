@@ -35,6 +35,7 @@ namespace DemoApp
             var parent = window1ViewModel.DiagramViewModel;
             SettingsDesignerItemViewModel item1 = new SettingsDesignerItemViewModel();
             item1.Parent = parent;
+            item1.Angle = -90;
             item1.Left = 100;
             item1.Top = 100;
             parent.Items.Add(item1);
@@ -42,24 +43,13 @@ namespace DemoApp
             InternalNodeItemViewModel item2 = new InternalNodeItemViewModel();
             item2.Parent = parent;
             item2.Left = 300;
+            item2.Angle = 65;
             item2.Top = 300;
             parent.Items.Add(item2);
 
-            ConnectorViewModel con1 = new ConnectorViewModel(item1.RightConnector, item2.LeftConnector);
-            con1.Parent = parent;
-
-            LineGroupItemViewModel lineG = new LineGroupItemViewModel(1, parent, "Тест1");
-            LineGroupItemViewModel lineG1 = new LineGroupItemViewModel(2, parent, "Тест2");
-            LineGroupItemViewModel lineG2 = new LineGroupItemViewModel(3, parent, "Тест3");
-
-            con1.AddItemCommand.ExecuteDelegate(lineG);
-            con1.AddItemCommand.ExecuteDelegate(lineG1);
-            con1.AddItemCommand.ExecuteDelegate(lineG2);
-
+            ConnectorViewModel con1 = new ConnectorViewModel(item1.RightConnector, item2.LeftConnector);    
+            con1.Parent = parent;      
             parent.Items.Add(con1);
-            ConnectorLineGroupViewModel lineG12 = new ConnectorLineGroupViewModel(1, parent, lineG.RightConnector, lineG1.RightConnector);
-
-            parent.Items.Add(lineG12);
         }
     }
 }

@@ -17,21 +17,12 @@ namespace DiagramDesigner.Controls
             base.DragDelta += new DragDeltaEventHandler(ResizeThumb_DragDelta);
         }
 
-        private Panel GetParent(DependencyObject element)
-        {
-            while (element != null && !((element is Panel) && ((element as Panel).Name == "selectedGrid")))
-                element = VisualTreeHelper.GetParent(element);
-
-            return element as Panel;
-        }
-
         void ResizeThumb_DragDelta(object sender, DragDeltaEventArgs e)
         {
             DesignerItemViewModelBase designerItem = this.DataContext as DesignerItemViewModelBase;
-            if(Keyboard.IsKeyDown(Key.Q) == true)
-            { 
-                if (designerItem != null && designerItem.IsSelected)
-                {
+
+            if (designerItem != null && designerItem.IsSelected)
+            {
                     const double minHeight = 10;
                     const double minWidth = 10;
 
@@ -84,18 +75,7 @@ namespace DiagramDesigner.Controls
 
                     }
                    
-                }
-            
-           }
-            else
-            {
-                foreach (DesignerItemViewModelBase item in designerItem.SelectedItems.OfType<DesignerItemViewModelBase>())
-                {
-                    var parent = GetParent(this);
-                    Point currentLocation = Mouse.GetPosition(parent);
-                    item.Angle = PointHelper.AnglePoint(currentLocation, new Point(item.CenterX, item.CenterY));
-                }
-            }
+                }        
             e.Handled = true;
         }   
     }

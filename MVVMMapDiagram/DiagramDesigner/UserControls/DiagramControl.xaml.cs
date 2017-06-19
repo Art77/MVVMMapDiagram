@@ -30,6 +30,6 @@ namespace DiagramDesigner
             DesignerCanvas myDesignerCanvas = sender as DesignerCanvas;
          //   zoomBox.DesignerCanvas = myDesignerCanvas;
         }
-
+        
     }
 }
