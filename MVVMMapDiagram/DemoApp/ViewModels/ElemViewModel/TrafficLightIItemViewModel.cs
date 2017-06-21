@@ -44,7 +44,6 @@ namespace DemoApp
             Init_();
         }
 
-
         public String HostUrl { get; set; }
         public ICommand ShowDataChangeWindowCommand { get; private set; }
 

@@ -2,6 +2,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:c="clr-namespace:DiagramDesigner.Controls;assembly=DiagramDesigner"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:cmd="clr-namespace:GalaSoft.MvvmLight;assembly=GalaSoft.MvvmLight"
     xmlns:local="clr-namespace:DemoApp"
     xmlns:poly="clr-namespace:DiagramDesigner.Controls;assembly=DiagramDesigner">
 
@@ -9,17 +11,21 @@
     <DataTemplate DataType="{x:Type local:TrafficLightIItemViewModel}">
         <Grid>
 
-           <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
-                <poly:RoundedCornersPolygon 
-                x:Name="polygon"
-                ConfinesPoints="{Binding Path=Points}"
-                Fill="Firebrick"
-                IsHitTestVisible="False"
-                Stroke="Black"
-                StrokeThickness="1"
-                UseRoundnessPercentage="False"
-                RenderTransformOrigin="0.5,1"
-                TypeShape="Polygon" />
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+           
+                <poly:RoundedCornersPolygon
+                    x:Name="polygon"
+                    ConfinesPoints="{Binding Points}"
+                    Fill="Firebrick"
+                    IsHitTestVisible="False"
+                    RenderTransformOrigin="0.5,1"
+                    Stroke="Black" Opacity="0.6"
+                    StrokeThickness="1"
+                    TypeShape="Polygon"
+                    VisibilityCorner="False" />
+                <i:Interaction.Triggers>
+                    
+                </i:Interaction.Triggers>
             </Grid>
 
             <Button
@@ -30,11 +36,12 @@
                 Content="HostUrl"
                 Template="{StaticResource infoButtonTemplate}" />
         </Grid>
-        <!--<DataTemplate.Triggers>
-            <Trigger Property="IsMouseOver" Value="true">
-                <Setter TargetName="polygon" Property="UseRoundnessPercentage" Value="true" />
-            </Trigger>
-        </DataTemplate.Triggers>-->
+        
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                <Setter TargetName="polygon" Property="VisibilityCorner" Value="true" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
     </DataTemplate>
 
     <!--  DataTemplate for Popup look and feel  -->
