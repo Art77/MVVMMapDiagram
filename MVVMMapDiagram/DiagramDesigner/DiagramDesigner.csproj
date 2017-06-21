@@ -136,13 +136,15 @@
       <DependentUpon>DiagramControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ConnectorViewModel.cs" />
+    <Compile Include="ViewModels\CountConnectorViewModel\OneDesignerItemViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase\ConnectorInfoBase.cs" />
     <Compile Include="Converters\ImageUrlConverter.cs" />
     <Compile Include="Helpers\DragObject.cs" />
     <Compile Include="Helpers\ToolBoxData.cs" />
-    <Compile Include="ViewModels\ViewModelBase\InternalNodeItemViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelBase\LineGroupItemViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelBase\LaneItemViewModel.cs" />
+    <Compile Include="ViewModels\CountConnectorViewModel\TrioDesignerItemViewModel.cs" />
+    <Compile Include="ViewModels\CountConnectorViewModel\TwoDesignerItemViewModel.cs" />
+    <Compile Include="ViewModels\CountConnectorViewModel\TwoDesignerBoxItemViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelBase\SegmentItemViewModel.cs" />
     <Compile Include="ViewModels\DiagramViewModel.cs" />
     <Compile Include="ViewModels\IDiagramViewModel.cs" />
     <Compile Include="ViewModels\PartCreatedConnectionInfo.cs" />
@@ -152,15 +154,11 @@
     <Compile Include="ViewModels\ViewModelBase\DesignerItemViewModelBase.cs" />
     <Compile Include="ViewModels\INPCBase.cs" />
     <Compile Include="ViewModels\SimpleCommand.cs" />
-    <Page Include="Resources\StyleItems\ConnectorItemStyle.xaml">
+    <Page Include="Resources\ConnectorItemStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\StyleItems\DesignerBoxStyle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\StyleItems\DesignerStyle.xaml">
+    <Page Include="Resources\DesignerStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

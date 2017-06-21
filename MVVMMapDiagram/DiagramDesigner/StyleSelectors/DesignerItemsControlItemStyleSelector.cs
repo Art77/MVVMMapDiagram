@@ -27,34 +27,35 @@ namespace DiagramDesigner
             if (itemsControl == null)
                 throw new InvalidOperationException("DesignerItemsControlItemStyleSelector : Could not find ItemsControl");
 
-            if (item is InternalNodeItemViewModel)
+            if (item is OneDesignerItemViewModel)
             {
-                return (Style)itemsControl.FindResource("interNodeItemStyle");
+                return (Style)itemsControl.FindResource("oneDesignerStyle");
+            }
+         
+            if (item is TrioDesignerItemViewModel)
+            {
+                return (Style)itemsControl.FindResource("trioDesignerStyle");
             }
 
-
-            if (item is LineGroupItemViewModel)
+            if (item is TwoDesignerBoxItemViewModel)
             {
-                return (Style)itemsControl.FindResource("lineGroupItemStyle");
+                return (Style)itemsControl.FindResource("twoDesignerBoxStyle");
             }
 
-            if (item is LaneItemViewModel)
+            if (item is SegmentItemViewModel)
             {
-                return (Style)itemsControl.FindResource("laneItemStyle");
+                return (Style)itemsControl.FindResource("designerItemStyle");
             }
 
             if (item is DesignerItemViewModelBase)
             {
-                return (Style)itemsControl.FindResource("designerItemStyle");
+                return (Style)itemsControl.FindResource("fourDesignerItemStyle");
             }
 
             if (item is ConnectorViewModel)
             {
                 return (Style)itemsControl.FindResource("connectorItemStyle");
             }
-
-
-
             return null;
         }
     } 

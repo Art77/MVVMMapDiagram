@@ -2,26 +2,25 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:DemoApp">
 
+
     <!-- DataTemplate for DesignerCanvas look and feel -->
-    <DataTemplate DataType="{x:Type local:SettingsDesignerItemViewModel}">
-            <Grid>
+    <DataTemplate DataType="{x:Type local:LineGrouItemViewModel}">
+        <Grid>
             <Image IsHitTestVisible="False"
-                    Stretch="Fill"
-                    Source="../../Images/Setting.png"
-                    Tag="setting" />
-          
-            <Button HorizontalAlignment="Right" 
+                   Stretch="Fill"
+                   Source="../../Images/Persist.png"
+                   Tag="setting" />
+            
+            <Button HorizontalAlignment="Right" Content="HostUrl"
                     VerticalAlignment="Bottom"
                     Margin="5"
-                    Template="{StaticResource infoButtonTemplate}"
+                    Template="{StaticResource infoButtonTemplate}" 
                     Command="{Binding ShowDataChangeWindowCommand}" />
-
-            <TextBlock Text="{Binding Path=Setting1}" HorizontalAlignment="Center" VerticalAlignment="Center" Background="BlueViolet"/>
         </Grid>
     </DataTemplate>
 
     <!-- DataTemplate for Popup look and feel -->
-    <DataTemplate DataType="{x:Type local:SettingsDesignerItemData}">
+    <DataTemplate DataType="{x:Type local:LineGrouItemData}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -29,15 +28,16 @@
             </Grid.RowDefinitions>
 
             <Label Grid.Row="0"
-                    Content="Setting1"
-                    Margin="5" />
+                   Content="HostUrl"
+                   Margin="5" />
             <TextBox Grid.Row="1"
-                        HorizontalAlignment="Left"
-                        Text="{Binding Setting1}"
-                        Width="150"
-                        Margin="5" />
+                    HorizontalAlignment="Left"
+                    Text="{Binding HostUrl}"
+                    Width="150"
+                    Margin="5" />
         </Grid>
     </DataTemplate>
+
 
 
 </ResourceDictionary>

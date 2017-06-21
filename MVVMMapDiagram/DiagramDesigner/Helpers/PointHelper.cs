@@ -15,6 +15,29 @@ namespace DiagramDesigner
         const double Rad2Deg = 180.0 / Math.PI;
         const double Deg2Rad = Math.PI / 180;
 
+        public static List<Point> GeneralPointPolygon(DesignerItemViewModelBase item, double _magrin = 10, double bulge = 5)
+        {
+            var list = new List<Point>();
+            list.Add(new Point(item.Left + _magrin, item.Top + _magrin));
+            var leftCenter = PointHelper.GetMidPoint(new Point(item.Left + _magrin, item.Top + _magrin), new Point(item.Left + _magrin, item.Top + item.ItemHeight - _magrin));
+            leftCenter.X -= bulge;
+            list.Add(leftCenter);
+            list.Add(new Point(item.Left + _magrin, item.Top + item.ItemHeight - _magrin));
+            var bottonCenter = PointHelper.GetMidPoint(new Point(item.Left + _magrin, item.Top + item.ItemHeight - _magrin), new Point(item.Left + item.ItemWidth - _magrin, item.Top + item.ItemHeight - _magrin));
+            bottonCenter.Y += bulge;
+            list.Add(bottonCenter);
+            list.Add(new Point(item.Left + item.ItemWidth - _magrin, item.Top + item.ItemHeight - _magrin));
+            var ritchCenter = PointHelper.GetMidPoint(new Point(item.Left + item.ItemWidth - _magrin, item.Top + item.ItemHeight - _magrin), new Point(item.Left + item.ItemWidth - _magrin, item.Top + _magrin));
+            ritchCenter.X += bulge;
+            list.Add(ritchCenter);
+            list.Add(new Point(item.Left + item.ItemWidth - _magrin, item.Top + _magrin));
+            var topCenter = PointHelper.GetMidPoint(new Point(item.Left + item.ItemWidth - _magrin, item.Top + _magrin), new Point(item.Left + _magrin, item.Top + _magrin));
+            topCenter.Y -= bulge;
+            list.Add(topCenter);
+
+            return list;
+        }
+
         public static Point GetPointForConnector(FullyCreatedConnectorInfo connector)
         {
             Point point = new Point();

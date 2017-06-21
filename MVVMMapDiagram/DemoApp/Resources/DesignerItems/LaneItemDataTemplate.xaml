@@ -1,0 +1,48 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:DemoApp">
+
+
+    <!--  DataTemplate for DesignerCanvas look and feel  -->
+    <DataTemplate DataType="{x:Type local:LaneItemViewModel}">
+        <Grid>
+            <Image
+                IsHitTestVisible="False"
+                Source="../../Images/Persist.png"
+                Stretch="Fill"
+                Tag="setting" />
+            <Button
+                Margin="5"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Command="{Binding ShowDataChangeWindowCommand}"
+                Content="HostUrl"
+                Template="{StaticResource infoButtonTemplate}" />
+        </Grid>
+    </DataTemplate>
+
+    <!--  DataTemplate for Popup look and feel  -->
+    <DataTemplate DataType="{x:Type local:LineGrouItemData}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Label
+                Grid.Row="0"
+                Margin="5"
+                Content="HostUrl" />
+            <TextBox
+                Grid.Row="1"
+                Width="150"
+                Margin="5"
+                HorizontalAlignment="Left"
+                Text="{Binding HostUrl}" />
+        </Grid>
+    </DataTemplate>
+
+
+
+</ResourceDictionary>

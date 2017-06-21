@@ -16,6 +16,10 @@ namespace DemoApp
         {
             toolBoxItems.Add(new ToolBoxData("../Images/Setting.png", typeof(SettingsDesignerItemViewModel)));
             toolBoxItems.Add(new ToolBoxData("../Images/Persist.png", typeof(PersistDesignerItemViewModel)));
+            toolBoxItems.Add(new ToolBoxData("../Images/Setting.png", typeof(LineGrouItemViewModel)));
+            toolBoxItems.Add(new ToolBoxData("../Images/Persist.png", typeof(ODconnectorItemViewModel)));
+            toolBoxItems.Add(new ToolBoxData("../Images/Setting.png", typeof(InternalNodeItemViewModel)));
+            toolBoxItems.Add(new ToolBoxData("../Images/Persist.png", typeof(TrafficLightIItemViewModel)));
         }
 
         public List<ToolBoxData> ToolBoxItems

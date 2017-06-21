@@ -39,6 +39,13 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GalaSoft.MvvmLight, Version=5.3.0.19026, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\portable-net45+wp8+wpa81+netcore45+monoandroid1+xamarin.ios10\GalaSoft.MvvmLight.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Extras">
+      <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\portable-net45+wp8+wpa81+netcore45+monoandroid1+xamarin.ios10\GalaSoft.MvvmLight.Extras.dll</HintPath>
+    </Reference>
     <Reference Include="Raven.Client.Embedded, Version=1.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
       <HintPath>Lib\RavenDBEmbedded\Raven.Client.Embedded.dll</HintPath>
     </Reference>
@@ -113,6 +120,16 @@
     <Compile Include="UserControls\ToolBoxControl.xaml.cs">
       <DependentUpon>ToolBoxControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\ElemViewModel\InternalNodeItemData.cs" />
+    <Compile Include="ViewModels\ElemViewModel\LaneItemData.cs" />
+    <Compile Include="ViewModels\ElemViewModel\LineGroupItemData.cs" />
+    <Compile Include="ViewModels\ElemViewModel\LaneItemViewModel.cs" />
+    <Compile Include="ViewModels\ElemViewModel\TrafficLightIItemViewModel.cs" />
+    <Compile Include="ViewModels\ElemViewModel\ODConnectorItemData.cs" />
+    <Compile Include="ViewModels\ElemViewModel\TrafficLightItemData.cs" />
+    <Compile Include="ViewModels\ElemViewModel\InternalNodeItemViewModel.cs" />
+    <Compile Include="ViewModels\ElemViewModel\ODConnectorItemViewModel.cs" />
+    <Compile Include="ViewModels\ElemViewModel\LineGroupItemViewModel.cs" />
     <Compile Include="ViewModels\ISupportDataChanges.cs" />
     <Compile Include="ViewModels\PersistDesignerItemData.cs" />
     <Compile Include="ViewModels\PersistDesignerItemViewModel.cs" />
@@ -171,6 +188,26 @@
     <Page Include="Popups\PopupWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\DesignerItems\TrafficLightIItemDataTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\DesignerItems\LaneItemDataTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\DesignerItems\LineGroupItemDataTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\DesignerItems\ODConnectorItemDataTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\DesignerItems\InternalNodeItemDataTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\DesignerItems\PersistDesignerItemDataTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>

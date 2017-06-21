@@ -4,21 +4,43 @@ using System.Linq;
 using System.Text;
 using DiagramDesigner;
 using System.Windows.Input;
+using System.Windows;
+using DiagramDesigner.Helpers;
+using System.ComponentModel;
 
 namespace DemoApp
 {
-    public class PersistDesignerItemViewModel : DesignerItemViewModelBase, ISupportDataChanges
+    public class TrafficLightIItemViewModel : DesignerItemViewModelBase, ISupportDataChanges
     {
         private IUIVisualizerService visualiserService;
 
-        public PersistDesignerItemViewModel(int id, DiagramViewModel parent, double left, double top, string hostUrl) : base(id,parent, left,top)
+        private List<Point> lisrPoint = new List<Point>();
+
+        public List<Point> Points
+        {
+            get { return lisrPoint; }
+            set
+            {
+                if(lisrPoint != value)
+                {
+                    lisrPoint = value;
+                    NotifyChanged("Points");
+                }
+            }
+        }
+
+
+
+        public TrafficLightIItemViewModel(int id, DiagramViewModel parent, double left, double top, string hostUrl) : base(id,parent, left,top)
         {
             this.HostUrl = hostUrl;
+            Points = PointHelper.GeneralPointPolygon(this);
             Init_();
         }
 
-        public PersistDesignerItemViewModel() : base()
+        public TrafficLightIItemViewModel() : base()
         {
+            Points = PointHelper.GeneralPointPolygon(this);
             Init_();
         }
 

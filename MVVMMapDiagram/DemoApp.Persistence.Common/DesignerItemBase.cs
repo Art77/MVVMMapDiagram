@@ -15,6 +15,9 @@ namespace DemoApp.Persistence.Common
 
         public double Left { get; private set; }
         public double Top { get; private set; }
+        public double Angle { get; private set; }
+        public double CenterX { get; private set; }
+        public double CenterY { get; private set; }
 
     }
 }

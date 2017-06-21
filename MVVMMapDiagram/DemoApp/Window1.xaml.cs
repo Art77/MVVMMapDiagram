@@ -44,6 +44,12 @@ namespace DemoApp
             item2.Top = 300;
             window1ViewModel.DiagramViewModel.Items.Add(item2);
 
+            var item3 = new TrafficLightIItemViewModel();
+            item3.Parent = window1ViewModel.DiagramViewModel;
+            item3.Left = 400;
+            item3.Top = 400;
+            window1ViewModel.DiagramViewModel.Items.Add(item3);
+
             ConnectorViewModel con1 = new ConnectorViewModel(item1.RightConnector, item2.TopConnector);
             con1.Parent = window1ViewModel.DiagramViewModel;
             window1ViewModel.DiagramViewModel.Items.Add(con1);

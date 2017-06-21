@@ -7,11 +7,11 @@ using System.Windows.Input;
 
 namespace DiagramDesigner
 {
-    public abstract class LineGroupItemViewModel : DesignerItemViewModelBase
+    public abstract class TwoDesignerBoxItemViewModel : DesignerItemViewModelBase
     {
         private ObservableCollection<SelectableDesignerItemViewModelBase> items = new ObservableCollection<SelectableDesignerItemViewModelBase>();
 
-        public LineGroupItemViewModel(int id, IDiagramViewModel parent, double left, double top) : base(id, parent, left, top)
+        public TwoDesignerBoxItemViewModel(int id, IDiagramViewModel parent, double left, double top) : base(id, parent, left, top)
         {
             AddItemCommand = new SimpleCommand(ExecuteAddItemCommand);
             RemoveItemCommand = new SimpleCommand(ExecuteRemoveItemCommand);
@@ -24,7 +24,7 @@ namespace DiagramDesigner
            // Mediator.Instance.Register(this);
         }
 
-        public LineGroupItemViewModel():base()
+        public TwoDesignerBoxItemViewModel():base()
         {
             AddItemCommand = new SimpleCommand(ExecuteAddItemCommand);
             RemoveItemCommand = new SimpleCommand(ExecuteRemoveItemCommand);
@@ -92,7 +92,7 @@ namespace DiagramDesigner
       
     }
 
-    public class test : LaneItemViewModel
+    public class test : SegmentItemViewModel
     {
 
     }

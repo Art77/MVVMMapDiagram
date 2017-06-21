@@ -30,6 +30,9 @@ namespace DiagramDesigner
 
         #endregion
 
+        public delegate void SizeChangeDelegate();
+
+        public SizeChangeDelegate SizeChange { get; set; }
 
         private DesignerCanvas GetDesignerCanvas(DependencyObject element)
         {
@@ -43,19 +46,25 @@ namespace DiagramDesigner
 
         public DesignerItemViewModelBase(int id, IDiagramViewModel parent, double left, double top) : base(id, parent)
         {
+            SizeChange += new SizeChangeDelegate(OnSizeChange);
             this.left = left;
             this.top = top;
             Init();
+           
         }
 
 
 
         public DesignerItemViewModelBase(): base()
         {
-            Init();
+            SizeChange += new SizeChangeDelegate(OnSizeChange);
+            Init();   
         }
 
-       
+        public virtual void OnSizeChange()
+        {
+         
+        }
 
         public virtual FullyCreatedConnectorInfo TopConnector
         {
@@ -90,6 +99,7 @@ namespace DiagramDesigner
                     itemWidth = value;
                     CenterX = value * 0.5;
                     NotifyChanged("ItemWidth");
+                    SizeChange?.Invoke();
                 }
             }
         }
@@ -104,6 +114,7 @@ namespace DiagramDesigner
                     itemHeight = value;
                     CenterY = value * 0.5;
                     NotifyChanged("ItemHeight");
+                    SizeChange?.Invoke();
                 }
             }
         }

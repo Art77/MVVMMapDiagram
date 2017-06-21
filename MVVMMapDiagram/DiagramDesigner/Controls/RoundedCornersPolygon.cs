@@ -9,8 +9,13 @@ using System.Windows.Shapes;
 
 namespace DiagramDesigner.Controls
 {
-   
- 
+   public enum TypeShape
+    {
+        Polygon = 1,
+        Polyline = 2,
+        None = 0
+    }
+    
     public class RoundedCornersPolygon : Shape
     {
         private readonly Path _path;
@@ -20,6 +25,37 @@ namespace DiagramDesigner.Controls
         public event EventHandler UpSegment;
 
         #region DependencyProperty
+
+        /// <summary>
+            /// The <see cref="TypeShape" /> dependency property's name.
+            /// </summary>
+        public const string TypeShapePropertyName = "TypeShape";
+
+        /// <summary>
+        /// Gets or sets the value of the <see cref="TypeShape" />
+        /// property. This is a dependency property.
+        /// </summary>
+        public TypeShape TypeShape
+        {
+            get
+            {
+                return (TypeShape)GetValue(TypeShapeProperty);
+            }
+            set
+            {
+                SetValue(TypeShapeProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Identifies the <see cref="TypeShape" /> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty TypeShapeProperty = DependencyProperty.Register(
+            TypeShapePropertyName,
+            typeof(TypeShape),
+            typeof(RoundedCornersPolygon),
+            new UIPropertyMetadata(TypeShape.Polyline));
+
 
         /// <summary>
         /// The <see cref="ArcRoundness" /> dependency property's name.
@@ -153,20 +189,55 @@ namespace DiagramDesigner.Controls
                 }
                 else
                 {
-                    var parent = LogicalTreeHelper.GetParent(polygon) as Panel;
-                    var countAdd = listPoints.Count - 2;
-                    var index = 1;
-
-                    polygon.Points.Add(listPoints[0]);
-                    for (int i = 0; i < countAdd; i++)
+                    switch (polygon.TypeShape)
                     {
-                        parent.Children.Add(polygon.GetCornerEllipse(listPoints[index], i));
-                        polygon.Points.Add(listPoints[index]);
-                        ++index;
-                    }
+                        case TypeShape.Polygon:
+                            {
+                                var parent = LogicalTreeHelper.GetParent(polygon) as Panel;
+                                var countAdd = listPoints.Count;
 
-                    var countPoint = polygon.Points.Count;
-                    polygon.Points.Insert(countPoint - 1, listPoints[index]);
+                                var countChild = parent.Children.Count;
+                                for (int i = 0; i < countChild; i++)
+                                {
+                                    if(parent.Children[i] is Path)
+                                    {
+                                        parent.Children.RemoveAt(i);
+                                    }
+                                }
+                                parent.Measure(parent.RenderSize);
+                                polygon.Points.Clear();
+
+                                for (int i = 0; i < countAdd; i++)
+                                {
+                                    parent.Children.Add(polygon.GetCornerEllipse(listPoints[i], i));
+                                    polygon.Points.Add(listPoints[i]);
+                                }
+                                polygon.IsClosed = true;
+                            }
+                            break;
+                        case TypeShape.Polyline:
+                            {
+                                var parent = LogicalTreeHelper.GetParent(polygon) as Panel;
+                                var countAdd = listPoints.Count - 2;
+                                var index = 1;
+
+                                polygon.Points.Add(listPoints[0]);
+                                for (int i = 0; i < countAdd; i++)
+                                {
+                                    parent.Children.Add(polygon.GetCornerEllipse(listPoints[index], i));
+                                    polygon.Points.Add(listPoints[index]);
+                                    ++index;
+                                }
+
+                                var countPoint = polygon.Points.Count;
+                                polygon.Points.Insert(countPoint - 1, listPoints[index]);
+                            }
+                            break;
+                        case TypeShape.None:
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
             else
@@ -214,22 +285,52 @@ namespace DiagramDesigner.Controls
             }
         }
 
-        private bool _useRoundnessPercentage;
         /// <summary>
-        /// Gets or sets a value that specifies if the ArcRoundness property value will be used as a percentage of the connecting segment or not.
+        /// The <see cref="UseRoundnessPercentage" /> dependency property's name.
+        /// </summary>
+        public const string UseRoundnessPercentagePropertyName = "UseRoundnessPercentage";
+
+        /// <summary>
+        /// Gets or sets the value of the <see cref="UseRoundnessPercentage" />
+        /// property. This is a dependency property.
         /// </summary>
         public bool UseRoundnessPercentage
         {
             get
             {
-                return _useRoundnessPercentage;
+                return (bool)GetValue(UseRoundnessPercentageProperty);
             }
             set
             {
-                _useRoundnessPercentage = value;
-                RedrawShape();
+                SetValue(UseRoundnessPercentageProperty, value);
             }
         }
+
+        /// <summary>
+        /// Identifies the <see cref="UseRoundnessPercentage" /> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty UseRoundnessPercentageProperty = DependencyProperty.Register(
+            UseRoundnessPercentagePropertyName,
+            typeof(bool),
+            typeof(RoundedCornersPolygon),
+            new UIPropertyMetadata(false));
+
+        //private bool _useRoundnessPercentage;
+        ///// <summary>
+        ///// Gets or sets a value that specifies if the ArcRoundness property value will be used as a percentage of the connecting segment or not.
+        ///// </summary>
+        //public bool UseRoundnessPercentage
+        //{
+        //    get
+        //    {
+        //        return _useRoundnessPercentage;
+        //    }
+        //    set
+        //    {
+        //        _useRoundnessPercentage = value;
+        //        RedrawShape();
+        //    }
+        //}
 
         public Geometry Data
         {
@@ -338,6 +439,7 @@ namespace DiagramDesigner.Controls
                 ellipse.Center = point;
                 this.Points[index] = point;
             }
+            
         }
 
         private void Path_MouseUp(object sender, MouseButtonEventArgs e)
