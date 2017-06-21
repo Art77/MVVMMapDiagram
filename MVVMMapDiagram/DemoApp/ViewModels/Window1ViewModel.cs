@@ -194,7 +194,7 @@ namespace DemoApp
                     itemsToRemove = new List<SelectableDesignerItemViewModelBase>();
 
                     //Save all PersistDesignerItemViewModel
-                    foreach (var persistItemVM in DiagramViewModel.Items.OfType<InternalNodeItemViewModel>())
+                    foreach (var persistItemVM in DiagramViewModel.Items.OfType<PersistDesignerItemViewModel>())
                     {
                         PersistDesignerItem persistDesignerItem = new PersistDesignerItem(persistItemVM.Id, persistItemVM.Left, persistItemVM.Top, persistItemVM.HostUrl);
                         persistItemVM.Id = databaseAccessService.SavePersistDesignerItem(persistDesignerItem);
@@ -268,8 +268,8 @@ namespace DemoApp
                         if (diagramItemData.ItemType == typeof(PersistDesignerItem))
                         {
                             PersistDesignerItem persistedDesignerItem = databaseAccessService.FetchPersistDesignerItem(diagramItemData.ItemId);
-                            InternalNodeItemViewModel persistDesignerItemViewModel =
-                                new InternalNodeItemViewModel(persistedDesignerItem.Id, diagramViewModel, persistedDesignerItem.Left, persistedDesignerItem.Top, persistedDesignerItem.HostUrl);
+                            PersistDesignerItemViewModel persistDesignerItemViewModel =
+                                new PersistDesignerItemViewModel(persistedDesignerItem.Id, diagramViewModel, persistedDesignerItem.Left, persistedDesignerItem.Top, persistedDesignerItem.HostUrl);
                             diagramViewModel.Items.Add(persistDesignerItemViewModel);
                         }
                         if (diagramItemData.ItemType == typeof(SettingsDesignerItem))
@@ -330,7 +330,7 @@ namespace DemoApp
 
         private Type GetTypeOfDiagramItem(DesignerItemViewModelBase vmType)
         {
-            if (vmType is InternalNodeItemViewModel)
+            if (vmType is PersistDesignerItemViewModel)
                 return typeof(PersistDesignerItem);
             if (vmType is SettingsDesignerItemViewModel)
                 return typeof(SettingsDesignerItem);
@@ -348,7 +348,7 @@ namespace DemoApp
 
             if (connectorDataItemType == typeof(PersistDesignerItem))
             {
-                dataItem = diagramViewModel.Items.OfType<InternalNodeItemViewModel>().Single(x => x.Id == conectorDataItemId);
+                dataItem = diagramViewModel.Items.OfType<PersistDesignerItemViewModel>().Single(x => x.Id == conectorDataItemId);
             }
 
             if (connectorDataItemType == typeof(SettingsDesignerItem))
@@ -413,7 +413,7 @@ namespace DemoApp
         {
 
             //make sure the item is removes from Diagram as well as removing them as individual items from database
-            if (itemToDelete is InternalNodeItemViewModel)
+            if (itemToDelete is PersistDesignerItemViewModel)
             {
                 DiagramItemData diagramItemToRemoveFromParent = wholeDiagramToAdjust.DesignerItems.Where(x => x.ItemId == itemToDelete.Id && x.ItemType == typeof(PersistDesignerItem)).Single();
                 wholeDiagramToAdjust.DesignerItems.Remove(diagramItemToRemoveFromParent);

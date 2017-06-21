@@ -32,6 +32,17 @@ namespace DiagramDesigner
                 return (Style)itemsControl.FindResource("interNodeItemStyle");
             }
 
+
+            if (item is LineGroupItemViewModel)
+            {
+                return (Style)itemsControl.FindResource("lineGroupItemStyle");
+            }
+
+            if (item is LaneItemViewModel)
+            {
+                return (Style)itemsControl.FindResource("laneItemStyle");
+            }
+
             if (item is DesignerItemViewModelBase)
             {
                 return (Style)itemsControl.FindResource("designerItemStyle");
@@ -42,10 +53,7 @@ namespace DiagramDesigner
                 return (Style)itemsControl.FindResource("connectorItemStyle");
             }
 
-            if (item is LineGroupItemViewModel)
-            {
-                return (Style)itemsControl.FindResource("lineGroupItemStyle");
-            }
+
 
             return null;
         }

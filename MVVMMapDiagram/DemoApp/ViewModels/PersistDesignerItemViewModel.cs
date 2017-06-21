@@ -7,23 +7,28 @@ using System.Windows.Input;
 
 namespace DemoApp
 {
-    public class LineGItemViewModel : LineGroupItemViewModel, ISupportDataChanges
+    public class PersistDesignerItemViewModel : DesignerItemViewModelBase, ISupportDataChanges
     {
         private IUIVisualizerService visualiserService;
 
-        public LineGItemViewModel(int id, IDiagramViewModel parent, double left, double top, string hostUrl) : base(id, parent, left, top)
+        public PersistDesignerItemViewModel(int id, DiagramViewModel parent, double left, double top, string hostUrl) : base(id,parent, left,top)
         {
             this.HostUrl = hostUrl;
-            Init_();
+            Init();
         }
 
-       
+        public PersistDesignerItemViewModel() : base()
+        {
+            Init();
+        }
+
+
         public String HostUrl { get; set; }
         public ICommand ShowDataChangeWindowCommand { get; private set; }
 
         public void ExecuteShowDataChangeWindowCommand(object parameter)
         {
-            InternalNodeItemData data = new InternalNodeItemData(HostUrl);
+            PersistDesignerItemData data = new PersistDesignerItemData(HostUrl);
             if (visualiserService.ShowDialog(data) == true)
             {
                 this.HostUrl = data.HostUrl;
@@ -31,7 +36,7 @@ namespace DemoApp
         }
 
 
-        private void Init_()
+        private void Init()
         {
             visualiserService = ApplicationServicesProvider.Instance.Provider.VisualizerService;
             ShowDataChangeWindowCommand = new SimpleCommand(ExecuteShowDataChangeWindowCommand);

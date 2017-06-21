@@ -5,6 +5,8 @@ using System.Windows;
 using DiagramDesigner.Helpers;
 using System.Windows.Media;
 using DiagramDesigner.Controls;
+using GalaSoft.MvvmLight.CommandWpf;
+using System;
 
 namespace DiagramDesigner
 {
@@ -20,26 +22,64 @@ namespace DiagramDesigner
         private Point endPoint;
         private Rect area;
         private List<Point> connectionPoints = new List<Point>();
+        private List<Point> pointsSegmentPolilyne = new List<Point>();
         private bool _visibility = true;
+        private double angle;
         #endregion
 
-        //public RelayCommand<LinkedList<VirtualSegment>> GeneralSegmentCommand { get; set; }
+        public RelayCommand<PointCollection> UpPointSegmentCommand { get; private set; }
 
         public ConnectorViewModel(int id, IDiagramViewModel parent, 
             FullyCreatedConnectorInfo sourceConnectorInfo, FullyCreatedConnectorInfo sinkConnectorInfo) : base(id,parent)
         {
             Init(sourceConnectorInfo, sinkConnectorInfo);
+            UpPointSegmentCommand = new RelayCommand<PointCollection>(OnMessagerPoint);
         }
 
         public ConnectorViewModel(FullyCreatedConnectorInfo sourceConnectorInfo, ConnectorInfoBase sinkConnectorInfo)
         {
             Init(sourceConnectorInfo, sinkConnectorInfo);
-            //GeneralSegmentCommand = new RelayCommand<LinkedList<VirtualSegment>>(OnMessagerSegment);
+            UpPointSegmentCommand = new RelayCommand<PointCollection>(OnMessagerPoint);
         }
 
-        
+        private void OnMessagerPoint(PointCollection obj)
+        {
+            pointsSegmentPolilyne = obj.ToList<Point>();
+            var count = pointsSegmentPolilyne.Count;
+            var left = pointsSegmentPolilyne[count - 2];
+            var ritch = pointsSegmentPolilyne[count - 1];
+            Angle = PointHelper.AnglePoint(left, ritch) + 90;
+            EndPoint = PointHelper.GetMidPoint(left, ritch);
+        }
 
         #region Property
+
+       public List<Point> PointsSegment
+        {
+            get { return pointsSegmentPolilyne; }
+            set
+            {
+                if (pointsSegmentPolilyne != value)
+                {
+                    pointsSegmentPolilyne = value;
+                    NotifyChanged("PointsSegment");
+                }
+            }
+        }
+
+        public double Angle
+        {
+            get { return angle; }
+            set
+            {
+                if(angle != value)
+                {
+                    angle = value;
+                    NotifyChanged("Angle");
+                }
+            }
+        }
+
         public bool IsFullConnection
         {
             get { return sinkConnectorInfo is FullyCreatedConnectorInfo; }
@@ -233,7 +273,7 @@ namespace DiagramDesigner
 
             if (IsFullConnection)
             {
-                EndPoint = ConnectionPoints.Last();
+                EndPoint = PointHelper.GetMidPoint( ConnectionPoints.First(), ConnectionPoints.Last());
                 ConnectorInfo sinkInfo = ConnectorInfo(ConnectionPoints[1].X,
                                   ConnectionPoints[1].Y,
                                   ConnectionPoints[1]);

@@ -1,0 +1,33 @@
+﻿<Window x:Class="AddToolBox.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
+        xmlns:th="clr-namespace:AvalonDock.Themes.VS2013;assembly=AvalonDock.Themes.VS2013"
+        xmlns:local="clr-namespace:AddToolBox"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <xcad:DockingManager Grid.Row="1" x:Name="sss"
+                       AllowMixedOrientation="True"
+                       BorderBrush="Black"
+                       BorderThickness="1">
+            <xcad:DockingManager.Theme>
+                <th:Vs2013LightTheme/>
+            </xcad:DockingManager.Theme>
+            <xcad:LayoutRoot x:Name="LayoutRoot">
+                <xcad:LayoutPanel Orientation="Horizontal">
+
+                    <xcad:LayoutAnchorablePane DockWidth="200">
+                        <xcad:LayoutAnchorable Title="Toolbox" CanClose="True" CanFloat="True" CanHide="True" ContentId="toolbox" x:Name="CtrlToolbox">
+                        </xcad:LayoutAnchorable>
+
+                        <xcad:LayoutAnchorable Title="Outline" CanClose="False" CanFloat="False" CanHide="False" ContentId="outline" x:Name="CtrlOutline">
+                        </xcad:LayoutAnchorable>
+                    </xcad:LayoutAnchorablePane>
+                </xcad:LayoutPanel>
+            </xcad:LayoutRoot>
+        </xcad:DockingManager>
+    </Grid>
+</Window>

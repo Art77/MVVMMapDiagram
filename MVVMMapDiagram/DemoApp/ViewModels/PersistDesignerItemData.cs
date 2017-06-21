@@ -12,11 +12,11 @@ namespace DemoApp
     /// the popup to be cancelled without applying any changes to the calling ViewModel
     /// whos data will be updated if the PopupWindow.xaml window is closed successfully
     /// </summary>
-    public class InternalNodeItemData: INPCBase
+    public class PersistDesignerItemData: INPCBase
     {
         private string hostUrl = "";
 
-        public InternalNodeItemData(string currentHostUrl)
+        public PersistDesignerItemData(string currentHostUrl)
         {
             hostUrl = currentHostUrl;
         }

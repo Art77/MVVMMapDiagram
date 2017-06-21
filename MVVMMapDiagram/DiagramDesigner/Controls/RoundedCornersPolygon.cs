@@ -9,45 +9,8 @@ using System.Windows.Shapes;
 
 namespace DiagramDesigner.Controls
 {
-    public enum EnumTypePoint
-    {
-        /// <summary>
-        /// Поворотный узел
-        /// </summary>
-        angleConnector,
-        /// <summary>
-        /// Внутренние соединение (внутренний узел)
-        /// </summary>
-        internalNode,
-        /// <summary>
-        /// Группа полос
-        /// </summary>
-        lineGroup,
-        /// <summary>
-        /// Default
-        /// </summary>
-        None
-    }
-
-    public struct VirtualSegment
-    {
-        public int Id
-        { get; private set; }
-
-        public Point Ritch
-        { get; set; }
-
-        public Point Left
-        { get; set; }
    
-        public VirtualSegment(int id, Point Ritch, Point Left)
-        {
-            this.Id = id;
-            this.Left = Left;
-            this.Ritch = Ritch;
-        }
-    }
-
+ 
     public class RoundedCornersPolygon : Shape
     {
         private readonly Path _path;
@@ -172,57 +135,47 @@ namespace DiagramDesigner.Controls
 
         private static void ConfinesPointsCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
             var polygon = d as RoundedCornersPolygon;
             var listPoints = e.NewValue as List<Point>;
+            var count = polygon.Points.Count;
+
             if ((d == null) && (listPoints == null))
                 return;
 
             if (polygon.Points.Count == 0)
             {
-                polygon.Points.Add(listPoints[0]);
-                polygon.Points.Add(listPoints[1]);
-                var segment = new VirtualSegment(0, listPoints[0], listPoints[1]);
-                polygon.SegmentLinked.AddFirst(segment);
+                var countPointModel = listPoints.Count;
+                if (countPointModel == 2)
+                {
+                    polygon.Points.Add(listPoints[0]);
+                    polygon.Points.Add(listPoints[1]);
+                }
+                else
+                {
+                    var parent = LogicalTreeHelper.GetParent(polygon) as Panel;
+                    var countAdd = listPoints.Count - 2;
+                    var index = 1;
+
+                    polygon.Points.Add(listPoints[0]);
+                    for (int i = 0; i < countAdd; i++)
+                    {
+                        parent.Children.Add(polygon.GetCornerEllipse(listPoints[index], i));
+                        polygon.Points.Add(listPoints[index]);
+                        ++index;
+                    }
+
+                    var countPoint = polygon.Points.Count;
+                    polygon.Points.Insert(countPoint - 1, listPoints[index]);
+                }
             }
             else
             {
                 polygon.Points[0] = listPoints[0];
-                var count = polygon.Points.Count;
-                polygon.Points[count - 1] = listPoints[1];
-
-                var segmentF = polygon.SegmentLinked.First.Value;
-                segmentF.Ritch = polygon.Points[0];
-                polygon.SegmentLinked.First.Value = segmentF;
-
-                var segmentL = polygon.SegmentLinked.Last.Value;
-                segmentL.Left = polygon.Points[1];
-                polygon.SegmentLinked.Last.Value = segmentL;
-
-                
+                var countUp = polygon.Points.Count;
+                polygon.Points[countUp - 1] = listPoints[1];
             }
-        }
 
-        private void UpPoint()
-        {
-            var segmentNode = SegmentLinked.First;
-            var index = 0;
-            if (SegmentLinked.Count + 1 != Points.Count)
-                return;
-            for (int i = 0; i < SegmentLinked.Count; i++)
-            {
-                var segment = segmentNode.Value;
-                segment.Ritch = Points[index];
-                segment.Left = Points[index + 1];
-                segmentNode.Value = segment;
-                segmentNode = segmentNode.Next;
-                index++;
-            }
-        }
-
-        public LinkedList<VirtualSegment> SegmentLinked
-        {
-            get;
-            set;
         }
 
         private PointCollection _points = new PointCollection();
@@ -235,9 +188,11 @@ namespace DiagramDesigner.Controls
             }
             set
             {
-                if(_points != value)
+                if (_points != value)
+                {
                     UpSegment?.Invoke(this, EventArgs.Empty);
-                _points = value;
+                    _points = value;
+                }
             }
         }
 
@@ -291,7 +246,6 @@ namespace DiagramDesigner.Controls
             _path = new Path { Data = geometry };
             Points = new PointCollection();
             Points.Changed += Points_Changed;
-            SegmentLinked = new LinkedList<VirtualSegment>();
         }
 
         private void Points_Changed(object sender, EventArgs e)
@@ -327,29 +281,6 @@ namespace DiagramDesigner.Controls
                     var flag = PointHelper.BelongLine(start, end, point);
                     if (flag == true)
                     {
-
-                        VirtualSegment segment;
-                        try
-                        {
-                            this.UpPoint();
-                            segment = SegmentLinked.Single(w => w.Ritch == start && w.Left == end);
-                        }
-                        catch
-                        {
-                            this.UpPoint();
-                            segment = SegmentLinked.Single(w => w.Ritch == start && w.Left == end);
-                        }
-                        var maxId = SegmentLinked.Max(m=>m.Id);
-                        var newSegment = new VirtualSegment(maxId+1, start, point);
-                        var nodeSegment = SegmentLinked.Find(segment);
-                        SegmentLinked.AddBefore(nodeSegment, newSegment);
-
-                        SegmentLinked.Remove(segment);
-
-                        segment.Ritch = point;
-                        var nodeUp = SegmentLinked.Find(newSegment);
-                        SegmentLinked.AddAfter(nodeUp, segment);
-
                         index += 1;
                         break;
                     }

@@ -17,12 +17,12 @@ namespace DemoApp
         {
 
             this.Setting1 = setting1;
-            Init_();
+            Init();
         }
 
         public SettingsDesignerItemViewModel()
         {
-            Init_();
+            Init();
         }
 
         public String Setting1 { get; set; }
@@ -37,7 +37,7 @@ namespace DemoApp
             }
         }
 
-        private void Init_()
+        private void Init()
         {
             visualiserService = ApplicationServicesProvider.Instance.Provider.VisualizerService;
             ShowDataChangeWindowCommand = new SimpleCommand(ExecuteShowDataChangeWindowCommand);

@@ -152,15 +152,15 @@
     <Compile Include="ViewModels\ViewModelBase\DesignerItemViewModelBase.cs" />
     <Compile Include="ViewModels\INPCBase.cs" />
     <Compile Include="ViewModels\SimpleCommand.cs" />
-    <Page Include="Resources\StyleItems\EdgeStyle.xaml">
+    <Page Include="Resources\StyleItems\ConnectorItemStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\StyleItems\LineGroupStyle.xaml">
+    <Page Include="Resources\StyleItems\DesignerBoxStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\StyleItems\NodeStyle.xaml">
+    <Page Include="Resources\StyleItems\DesignerStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

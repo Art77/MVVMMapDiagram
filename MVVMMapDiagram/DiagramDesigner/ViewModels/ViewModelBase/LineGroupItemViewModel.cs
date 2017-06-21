@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace DiagramDesigner
 {
-    public abstract class LineGroupItemViewModel : DesignerItemViewModelBase, IDiagramViewModel
+    public abstract class LineGroupItemViewModel : DesignerItemViewModelBase
     {
         private ObservableCollection<SelectableDesignerItemViewModelBase> items = new ObservableCollection<SelectableDesignerItemViewModelBase>();
 
@@ -18,7 +18,22 @@ namespace DiagramDesigner
             ClearSelectedItemsCommand = new SimpleCommand(ExecuteClearSelectedItemsCommand);
             CreateNewDiagramCommand = new SimpleCommand(ExecuteCreateNewDiagramCommand);
 
-            Mediator.Instance.Register(this);
+            this.ItemHeight = 35;
+            this.ItemWidth = 100;
+
+           // Mediator.Instance.Register(this);
+        }
+
+        public LineGroupItemViewModel():base()
+        {
+            AddItemCommand = new SimpleCommand(ExecuteAddItemCommand);
+            RemoveItemCommand = new SimpleCommand(ExecuteRemoveItemCommand);
+            ClearSelectedItemsCommand = new SimpleCommand(ExecuteClearSelectedItemsCommand);
+            CreateNewDiagramCommand = new SimpleCommand(ExecuteCreateNewDiagramCommand);
+
+            this.ItemHeight = 35;
+            this.ItemWidth = 100;
+            //  Mediator.Instance.Register(this);
         }
 
         [MediatorMessageSink("DoneLaneDrawingMessage")]
@@ -49,21 +64,17 @@ namespace DiagramDesigner
 
         private void ExecuteAddItemCommand(object parameter)
         {
-            if (parameter is SelectableDesignerItemViewModelBase)
-            {
-                SelectableDesignerItemViewModelBase item = (SelectableDesignerItemViewModelBase)parameter;
-                item.Parent = this;
-                items.Add(item);
-            }
+            SelectableDesignerItemViewModelBase item = new test();
+            item.Parent = null;
+            items.Add(item);
         }
 
         private void ExecuteRemoveItemCommand(object parameter)
         {
-            if (parameter is SelectableDesignerItemViewModelBase)
-            {
-                SelectableDesignerItemViewModelBase item = (SelectableDesignerItemViewModelBase)parameter;
+
+                SelectableDesignerItemViewModelBase item = items.Last();
                 items.Remove(item);
-            }
+            
         }
 
         private void ExecuteClearSelectedItemsCommand(object parameter)
@@ -79,5 +90,10 @@ namespace DiagramDesigner
             Items.Clear();
         }
       
+    }
+
+    public class test : LaneItemViewModel
+    {
+
     }
 }

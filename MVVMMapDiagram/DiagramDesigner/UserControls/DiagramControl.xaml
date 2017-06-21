@@ -19,13 +19,14 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-             <!--<map:MapCanvas Name="map" Mode="Mouse" Visibility="Collapsed"
+
+            <map:MapCanvas Name="map" Mode="Mouse" Visibility="Visible"
                            MinZoom="{Binding ElementName=zoomBorder, Path=MinZoom}"
                            Zoom="{Binding ElementName=zoomBorder, Path=Zoom, Mode=OneWay,
-                                    UpdateSourceTrigger=PropertyChanged}"/>-->
+                                    UpdateSourceTrigger=PropertyChanged}"/>
 
 
-            <!--<s:ZoomBorder x:Name="zoomBorder" AutoFitMode="Fill" ZoomSpeed="2" ClipToBounds="True"
+            <s:ZoomBorder x:Name="zoomBorder" AutoFitMode="Fill" ZoomSpeed="2" ClipToBounds="True"
                             VerticalAlignment="Stretch" 
                             HorizontalAlignment="Stretch"
                             MouseRightButtonDown="zoomBorder_MouseRightButtonDown"
@@ -35,24 +36,24 @@
                             Zoom="16"
                             MinZoom="5"
                             MaxZoom="18"
-                            AllowDrop="True"/>-->
+                            AllowDrop="True">
 
-            <ItemsControl ItemsSource="{Binding Items}"
+                <ItemsControl ItemsSource="{Binding Items}"
                                 ItemContainerStyleSelector="{x:Static s:DesignerItemsControlItemStyleSelector.Instance}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <s:DesignerCanvas Loaded="DesignerCanvas_Loaded"
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <s:DesignerCanvas Loaded="DesignerCanvas_Loaded"
                                                   MinHeight="1800"
                                                   MinWidth="1800"
                                                   Background="Transparent"
-                                                  HorizontalAlignment="Stretch"
-                                                  VerticalAlignment="Stretch"
+                                                  HorizontalAlignment="Left"
+                                                  VerticalAlignment="Top"
                                                   AllowDrop="True">
-                        </s:DesignerCanvas>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
-
+                            </s:DesignerCanvas>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </s:ZoomBorder>
 
 
 
@@ -75,14 +76,6 @@
                        Text="{Binding ElementName=map, Path=Zoom, UpdateSourceTrigger=PropertyChanged}" 
                        Width="50" Background="#FFFFB97F"></TextBlock>
             </Grid>
-
-
-            <!--<s:ZoomBox Grid.Column="2" x:Name="zoomBox" Visibility="Hidden"
-                       Width="180" StepZoom="10"
-                       HorizontalAlignment="Right"
-                       VerticalAlignment="Top"
-                       ScrollViewer="{Binding ElementName=DesignerScrollViewer}"
-                       Margin="0,5,25,0" />-->
         </Grid>
     </Border>
 </UserControl>

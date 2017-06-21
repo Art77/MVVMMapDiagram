@@ -32,24 +32,21 @@ namespace DemoApp
         /// <param name="e"></param>
         void Window1_Loaded(object sender, RoutedEventArgs e)
         {
-            var parent = window1ViewModel.DiagramViewModel;
             SettingsDesignerItemViewModel item1 = new SettingsDesignerItemViewModel();
-            item1.Parent = parent;
-            item1.Angle = -90;
+            item1.Parent = window1ViewModel.DiagramViewModel;
             item1.Left = 100;
             item1.Top = 100;
-            parent.Items.Add(item1);
+            window1ViewModel.DiagramViewModel.Items.Add(item1);
 
-            InternalNodeItemViewModel item2 = new InternalNodeItemViewModel();
-            item2.Parent = parent;
+            PersistDesignerItemViewModel item2 = new PersistDesignerItemViewModel();
+            item2.Parent = window1ViewModel.DiagramViewModel;
             item2.Left = 300;
-            item2.Angle = 65;
             item2.Top = 300;
-            parent.Items.Add(item2);
+            window1ViewModel.DiagramViewModel.Items.Add(item2);
 
-            ConnectorViewModel con1 = new ConnectorViewModel(item1.RightConnector, item2.LeftConnector);    
-            con1.Parent = parent;      
-            parent.Items.Add(con1);
+            ConnectorViewModel con1 = new ConnectorViewModel(item1.RightConnector, item2.TopConnector);
+            con1.Parent = window1ViewModel.DiagramViewModel;
+            window1ViewModel.DiagramViewModel.Items.Add(con1);
         }
     }
 }

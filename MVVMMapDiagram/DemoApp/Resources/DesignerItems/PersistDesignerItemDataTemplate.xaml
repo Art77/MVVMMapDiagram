@@ -4,18 +4,22 @@
 
 
     <!-- DataTemplate for DesignerCanvas look and feel -->
-    <DataTemplate DataType="{x:Type local:LineGItemViewModel}">
-
-        <Button HorizontalAlignment="Right"
+    <DataTemplate DataType="{x:Type local:PersistDesignerItemViewModel}">
+        <Grid>
+            <Image IsHitTestVisible="False"
+                   Stretch="Fill"
+                   Source="../../Images/Persist.png"
+                   Tag="setting" />
+            <Button HorizontalAlignment="Right"
                     VerticalAlignment="Bottom"
-                    Margin="5" Width="50"
+                    Margin="5"
                     Template="{StaticResource infoButtonTemplate}" 
                     Command="{Binding ShowDataChangeWindowCommand}" />
-        
+        </Grid>
     </DataTemplate>
 
     <!-- DataTemplate for Popup look and feel -->
-    <DataTemplate DataType="{x:Type local:LineGroupItemData}">
+    <DataTemplate DataType="{x:Type local:PersistDesignerItemData}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
