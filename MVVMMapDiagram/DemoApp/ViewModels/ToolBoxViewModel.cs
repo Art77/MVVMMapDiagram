@@ -14,12 +14,11 @@ namespace DemoApp
 
         public ToolBoxViewModel()
         {
-            toolBoxItems.Add(new ToolBoxData("../Images/Setting.png", typeof(SettingsDesignerItemViewModel)));
-            toolBoxItems.Add(new ToolBoxData("../Images/Persist.png", typeof(PersistDesignerItemViewModel)));
-            toolBoxItems.Add(new ToolBoxData("../Images/Setting.png", typeof(LineGrouItemViewModel)));
-            toolBoxItems.Add(new ToolBoxData("../Images/Persist.png", typeof(ODconnectorItemViewModel)));
-            toolBoxItems.Add(new ToolBoxData("../Images/Setting.png", typeof(InternalNodeItemViewModel)));
-            toolBoxItems.Add(new ToolBoxData("../Images/Persist.png", typeof(TrafficLightIItemViewModel)));
+
+            toolBoxItems.Add(new ToolBoxData("../Images/lineGroupPanel.png", typeof(LineGrouItemViewModel)));
+            toolBoxItems.Add(new ToolBoxData("../Images/ODConnectorPanel.png", typeof(ODconnectorItemViewModel)));
+            toolBoxItems.Add(new ToolBoxData("../Images/internalNodePanel.png", typeof(SettingsDesignerItemViewModel)));
+            toolBoxItems.Add(new ToolBoxData("../Images/nodePanel.png", typeof(TrafficLightIItemViewModel)));
         }
 
         public List<ToolBoxData> ToolBoxItems

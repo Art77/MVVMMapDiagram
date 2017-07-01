@@ -8,8 +8,9 @@
         <Grid>
             <Image IsHitTestVisible="False"
                    Stretch="Fill"
-                   Source="../../Images/Persist.png"
-                   Tag="setting" />
+                   Source="../../Images/lineGroupPanel.png"
+                   Tag="setting"
+                   Opacity="0.6"/>
             <Button HorizontalAlignment="Right" Content="HostUrl"
                     VerticalAlignment="Bottom"
                     Margin="5"

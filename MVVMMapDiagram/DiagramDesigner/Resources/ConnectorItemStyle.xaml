@@ -20,22 +20,33 @@
         <Setter Property="ContentTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <Canvas Margin="0" 
+                    <Canvas Margin="0"
                             x:Name="selectedGrid"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch">
-
+ <!--ConfinesPoints="{Binding Path=ConnectionPoints}"--> 
                         <c:RoundedCornersPolygon x:Name="PART_Connector"
                                                 Stroke="Black"
                                                 StrokeThickness="1"
                                                 UseRoundnessPercentage="True"
                                                 Fill="Transparent"
-                                                ConfinesPoints="{Binding Path=ConnectionPoints}"                                                             
+                                               
+                                                CornerSource="{Binding Path=CornerEdge}"
                                                 Visibility="{Binding Path=VisibilityEdge, 
                                                                         Converter={x:Static s:BoolToVisibilityConverter.Instance}}">
 
                             <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="UpSegment">
+                                <i:EventTrigger EventName="AddCorner">
+                                    <cmd:EventToCommand Command="{Binding Path=UpPointSegmentCommand}"
+                                                                          CommandParameter="{Binding ElementName=PART_Connector, Path=Points}"/>
+                                </i:EventTrigger>
+
+                                <i:EventTrigger EventName="DeleteCorner">
+                                    <cmd:EventToCommand Command="{Binding Path=UpPointSegmentCommand}"
+                                                                          CommandParameter="{Binding ElementName=PART_Connector, Path=Points}"/>
+                                </i:EventTrigger>
+                                
+                                <i:EventTrigger EventName="EditCorner">
                                     <cmd:EventToCommand Command="{Binding Path=UpPointSegmentCommand}"
                                                                           CommandParameter="{Binding ElementName=PART_Connector, Path=Points}"/>
                                 </i:EventTrigger>

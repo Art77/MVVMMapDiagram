@@ -475,7 +475,7 @@
                                 Canvas.ZIndex="1"
                                 Content="{TemplateBinding Content}" />
 
-                            <ItemsControl
+                            <!--<ItemsControl
                                 Canvas.Left="{Binding Left}"
                                 Canvas.Top="{Binding Top}"
                                 MinWidth="{Binding ItemWidth}"
@@ -517,7 +517,7 @@
                                     CommandParameter="null">
                                     Del
                                 </Button>
-                            </StackPanel>
+                            </StackPanel>-->
 
                             <Grid x:Name="PART_ConnectorDecorator">
                                 <c:RotateThumb

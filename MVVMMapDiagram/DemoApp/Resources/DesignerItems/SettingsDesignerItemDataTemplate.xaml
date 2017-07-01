@@ -7,7 +7,7 @@
             <Grid>
             <Image IsHitTestVisible="False"
                     Stretch="Fill"
-                    Source="../../Images/Setting.png"
+                    Source="../../Images/internalNodePanel.png"
                     Tag="setting" />
           
             <Button HorizontalAlignment="Right" 

@@ -20,6 +20,7 @@ namespace DiagramDesigner.Controls
             base.OnMouseUp(e);
             parent = null;
             Mouse.Capture(null);
+            
         }
 
         private DesignerCanvas GetParent(DependencyObject element)

@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows;
 using DiagramDesigner.Helpers;
 using System.ComponentModel;
+using GalaSoft.MvvmLight.CommandWpf;
 
 namespace DemoApp
 {
@@ -29,11 +30,12 @@ namespace DemoApp
             }
         }
 
-
+        public RelayCommand EditPolygon { get; private set; }
 
         public TrafficLightIItemViewModel(int id, DiagramViewModel parent, double left, double top, string hostUrl) : base(id,parent, left,top)
         {
             this.HostUrl = hostUrl;
+            EditPolygon = new RelayCommand(test);
             Points = PointHelper.GeneralPointPolygon(this);
             Init_();
         }
@@ -41,7 +43,13 @@ namespace DemoApp
         public TrafficLightIItemViewModel() : base()
         {
             Points = PointHelper.GeneralPointPolygon(this);
+            EditPolygon = new RelayCommand(test);
             Init_();
+        }
+
+        public void test()
+        {
+            var f = 2;
         }
 
         public String HostUrl { get; set; }

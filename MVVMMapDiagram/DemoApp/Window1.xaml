@@ -5,7 +5,7 @@
         xmlns:local="clr-namespace:DemoApp"
         WindowState="Maximized"
         SnapsToDevicePixels="True"
-		Title="Diagram Designer"        
+		Title="EditorTransportNetwork"        
 		Height="850" Width="1100">
 	
 
@@ -27,13 +27,13 @@
 
             <Label Margin="30,0,3,0"
                    VerticalAlignment="Center"
-                   Content="Saved Diagrams" />
+                   Content="Saved Net" />
             <ComboBox Margin="8,0,3,0"
                      Width="200"
                      ToolTip="Saved Diagrams"
                       SelectedItem="{Binding SavedDiagramId}"
                      ItemsSource="{Binding SavedDiagrams}"/>
-            <Button ToolTip="Load Selected Diagram"
+            <Button ToolTip="Load Selected Net"
                     Content="Load"
                     Margin="8,0,3,0"
                     Command="{Binding LoadDiagramCommand}" />

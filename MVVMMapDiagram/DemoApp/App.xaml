@@ -1,4 +1,4 @@
-﻿<Application x:Class="DemoApp.App" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StartupUri="Window1.xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" d1p1:Ignorable="d" xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006">
+<Application x:Class="DemoApp.App" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006" d1p1:Ignorable="d" StartupUri="Window1.xaml">
   <Application.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
@@ -33,15 +33,11 @@
         </ResourceDictionary>
         <ResourceDictionary Source="Resources/DesignerItems/LineGroupItemDataTemplate.xaml">
         </ResourceDictionary>
-                <ResourceDictionary Source="Resources/DesignerItems/ODConnectorItemDataTemplate.xaml">
-                </ResourceDictionary>
-                <ResourceDictionary Source="Resources/DesignerItems/TrafficLightIItemDataTemplate.xaml">
-                </ResourceDictionary>
-      
-      
+        <ResourceDictionary Source="Resources/DesignerItems/ODConnectorItemDataTemplate.xaml">
+        </ResourceDictionary>
+        <ResourceDictionary Source="Resources/DesignerItems/TrafficLightIItemDataTemplate.xaml">
+        </ResourceDictionary>
       </ResourceDictionary.MergedDictionaries>
-        
-
     </ResourceDictionary>
   </Application.Resources>
 </Application>

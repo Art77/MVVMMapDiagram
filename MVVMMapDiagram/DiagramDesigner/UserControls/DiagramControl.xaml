@@ -64,7 +64,7 @@
 
 
 
-            <Grid
+            <!--<Grid
                 Grid.Row="3"
                 HorizontalAlignment="Right"
                 Background="#FFCF5B41">
@@ -98,7 +98,7 @@
                     Width="50"
                     Background="#FFFFB97F"
                     Text="{Binding ElementName=map, Path=Zoom, UpdateSourceTrigger=PropertyChanged}" />
-            </Grid>
+            </Grid>-->
         </Grid>
     </Border>
 </UserControl>

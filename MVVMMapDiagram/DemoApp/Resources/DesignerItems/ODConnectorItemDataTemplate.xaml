@@ -9,7 +9,8 @@
         <Grid>
             <Image
                 IsHitTestVisible="False"
-                Source="../../Images/Persist.png"
+                Source="../../Images/ODConnectorPanel.png"
+                Opacity="0.6"
                 Stretch="Fill"
                 Tag="setting" />
             
