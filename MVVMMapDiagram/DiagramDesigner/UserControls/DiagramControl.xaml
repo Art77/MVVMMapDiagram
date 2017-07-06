@@ -46,7 +46,8 @@
                 Zoom="16"
                 ZoomSpeed="2">
 
-                <ItemsControl ItemContainerStyleSelector="{x:Static s:DesignerItemsControlItemStyleSelector.Instance}" ItemsSource="{Binding Items}">
+                <ItemsControl ItemContainerStyleSelector="{x:Static s:DesignerItemsControlItemStyleSelector.Instance}"
+                              ItemsSource="{Binding Items}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <s:DesignerCanvas

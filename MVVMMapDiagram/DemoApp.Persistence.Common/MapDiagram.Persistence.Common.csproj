@@ -47,11 +47,15 @@
     <Compile Include="DesignerItemBase.cs" />
     <Compile Include="DiagramItem.cs" />
     <Compile Include="IDatabaseAccessService.cs" />
+    <Compile Include="NetItem\InternalNodeItem.cs" />
+    <Compile Include="NetItem\LaneItem.cs" />
+    <Compile Include="NetItem\LineGroupItem.cs" />
+    <Compile Include="NetItem\ODConnectorItem.cs" />
     <Compile Include="Orientation.cs" />
+    <Compile Include="NetItem\TrafficLightItem.cs" />
     <Compile Include="PersistDesignerItem.cs" />
     <Compile Include="PersitableItemBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SettingsDesignerItem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using DiagramDesigner;
 using System.Windows.Input;
 using System.Windows;
-using DiagramDesigner.Helpers;
-using System.ComponentModel;
 using GalaSoft.MvvmLight.CommandWpf;
 
-namespace DemoApp
+namespace MapDiagram
 {
-    public class TrafficLightIItemViewModel : DesignerItemViewModelBase, ISupportDataChanges
+    public class TrafficLightItemViewModel : DesignerItemViewModelBase, ISupportDataChanges
     {
         private IUIVisualizerService visualiserService;
 
@@ -30,47 +26,52 @@ namespace DemoApp
             }
         }
 
-        public RelayCommand EditPolygon { get; private set; }
-
-        public TrafficLightIItemViewModel(int id, DiagramViewModel parent, double left, double top, string hostUrl) : base(id,parent, left,top)
+        public TrafficLightItemViewModel(int id, DiagramViewModel parent, double left, double top,
+           double itemHeight, double itemWidth, double angle, string hostUrl) : base(id, parent, left, top, itemHeight, itemWidth, angle)
         {
+               
+            Points = PointHelper.GeneralPointPolygon(this);
             this.HostUrl = hostUrl;
-            EditPolygon = new RelayCommand(test);
+            Init_();
+        }
+
+        public TrafficLightItemViewModel() : base()
+        {
             Points = PointHelper.GeneralPointPolygon(this);
             Init_();
         }
 
-        public TrafficLightIItemViewModel() : base()
-        {
-            Points = PointHelper.GeneralPointPolygon(this);
-            EditPolygon = new RelayCommand(test);
-            Init_();
-        }
-
-        public void test()
-        {
-            var f = 2;
-        }
 
         public String HostUrl { get; set; }
         public ICommand ShowDataChangeWindowCommand { get; private set; }
+        public RelayCommand<MouseButtonEventArgs> ShowDataChangeWindowRelayCommand { get; private set; }
 
         public void ExecuteShowDataChangeWindowCommand(object parameter)
         {
-            PersistDesignerItemData data = new PersistDesignerItemData(HostUrl);
+            TrafficLightIItemData data = new TrafficLightIItemData(HostUrl);
             if (visualiserService.ShowDialog(data) == true)
             {
                 this.HostUrl = data.HostUrl;
             }
         }
-
+        public void ExecuteShowDataChangeWindowCommand(MouseButtonEventArgs e)
+        {
+            if ((e.LeftButton == MouseButtonState.Pressed) && (Keyboard.IsKeyDown(Key.LeftAlt)))
+            {
+                TrafficLightIItemData data = new TrafficLightIItemData(HostUrl);
+                if (visualiserService.ShowDialog(data) == true)
+                {
+                    this.HostUrl = data.HostUrl;
+                }
+            }
+        }
 
         private void Init_()
         {
             visualiserService = ApplicationServicesProvider.Instance.Provider.VisualizerService;
             ShowDataChangeWindowCommand = new SimpleCommand(ExecuteShowDataChangeWindowCommand);
+            ShowDataChangeWindowRelayCommand = new RelayCommand<MouseButtonEventArgs>(ExecuteShowDataChangeWindowCommand);
             this.ShowConnectors = false;
-
         }
     }
 }

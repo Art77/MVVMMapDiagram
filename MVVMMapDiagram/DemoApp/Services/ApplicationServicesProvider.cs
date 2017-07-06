@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using DemoApp.Persistence.Common;
-using DemoApp.Persistence.RavenDB;
+using MapDiagram.Persistence.Common;
+using MapDiagram.Persistence.RavenDB;
 
 
 
 
-namespace DemoApp
+namespace MapDiagram
 {
 
     /// <summary>

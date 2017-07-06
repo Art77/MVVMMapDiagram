@@ -4,18 +4,18 @@
     xmlns:c="clr-namespace:DiagramDesigner.Controls;assembly=DiagramDesigner"
     xmlns:cmd="http://www.galasoft.ch/mvvmlight"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-    xmlns:local="clr-namespace:DemoApp"
+    xmlns:local="clr-namespace:MapDiagram"
     xmlns:poly="clr-namespace:DiagramDesigner.Controls;assembly=DiagramDesigner">
 
     <!--  DataTemplate for DesignerCanvas look and feel  -->
-    <DataTemplate DataType="{x:Type local:TrafficLightIItemViewModel}">
+    <DataTemplate DataType="{x:Type local:TrafficLightItemViewModel}">
 
         <ContentControl x:Name="control">
             <Grid>
                 <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
 
                     <!--  IsHitTestVisible=""  -->
-                    <poly:RoundedCornersPolygon
+                    <!--<poly:RoundedCornersPolygon
                         x:Name="polygon"
                         ConfinesPoints="{Binding Points}"
                         Fill="Black"
@@ -25,55 +25,48 @@
                         Stroke="Black"
                         StrokeThickness="1"
                         TypeShape="Polygon"
-                        VisibilityCorner="False"/>
+                      />-->
+
+               <Image
+                IsHitTestVisible="False"
+                Source="../../Images/nodePanel.png"
+                Opacity="0.6"
+                Stretch="Fill"
+                Tag="setting" />
 
                 </Grid>
 
                 <Button
                     Margin="5"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
                     Command="{Binding ShowDataChangeWindowCommand}"
                     Content="HostUrl"
                     Template="{StaticResource infoButtonTemplate}" />
-
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseDoubleClick" SourceName="control">
-                        <cmd:EventToCommand Command="{Binding EditPolygon}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
             </Grid>
+           
         </ContentControl>
 
 
         <DataTemplate.Triggers>
 
-            <DataTrigger Binding="{Binding IsSelected}" Value="True">
+            <!--<DataTrigger Binding="{Binding IsSelected}" Value="True">
                 <Setter TargetName="polygon" Property="VisibilityCorner" Value="true" />
-            </DataTrigger>
+            </DataTrigger>-->
             <EventTrigger RoutedEvent="MouseMove" />
         </DataTemplate.Triggers>
     </DataTemplate>
 
     <!--  DataTemplate for Popup look and feel  -->
     <DataTemplate DataType="{x:Type local:TrafficLightIItemData}">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-
-            <Label
-                Grid.Row="0"
-                Margin="5"
-                Content="HostUrl" />
-            <TextBox
-                Grid.Row="1"
-                Width="150"
-                Margin="5"
-                HorizontalAlignment="Left"
-                Text="{Binding HostUrl}" />
-        </Grid>
+        <Grid Height="200" Width="500">
+            <TabControl TabStripPlacement="Left" Canvas.ZIndex="0">
+                <TabItem Header="test"></TabItem>
+                <TabItem Header="test"></TabItem>
+                <TabItem Header="test"></TabItem>
+                <TabItem Header="test"></TabItem>
+            </TabControl>
+         </Grid>
     </DataTemplate>
 
 

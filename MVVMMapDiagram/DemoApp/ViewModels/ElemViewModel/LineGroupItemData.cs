@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using DiagramDesigner;
 
-namespace DemoApp
+namespace MapDiagram
 {
     /// <summary>
     /// This is passed to the PopupWindow.xaml window, where a DataTemplate is used to provide the

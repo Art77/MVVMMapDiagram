@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Input;
 
-namespace DemoApp
+namespace MapDiagram
 {
     public interface ISupportDataChanges
     {

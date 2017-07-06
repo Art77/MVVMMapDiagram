@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DemoApp</RootNamespace>
-    <AssemblyName>DemoApp</AssemblyName>
+    <AssemblyName>MapDiagram</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -137,17 +137,13 @@
     <Compile Include="ViewModels\ElemViewModel\LaneItemData.cs" />
     <Compile Include="ViewModels\ElemViewModel\LineGroupItemData.cs" />
     <Compile Include="ViewModels\ElemViewModel\LaneItemViewModel.cs" />
-    <Compile Include="ViewModels\ElemViewModel\TrafficLightIItemViewModel.cs" />
+    <Compile Include="ViewModels\ElemViewModel\TrafficLightItemViewModel.cs" />
     <Compile Include="ViewModels\ElemViewModel\ODConnectorItemData.cs" />
     <Compile Include="ViewModels\ElemViewModel\TrafficLightItemData.cs" />
     <Compile Include="ViewModels\ElemViewModel\InternalNodeItemViewModel.cs" />
     <Compile Include="ViewModels\ElemViewModel\ODConnectorItemViewModel.cs" />
     <Compile Include="ViewModels\ElemViewModel\LineGroupItemViewModel.cs" />
     <Compile Include="ViewModels\ISupportDataChanges.cs" />
-    <Compile Include="ViewModels\PersistDesignerItemData.cs" />
-    <Compile Include="ViewModels\PersistDesignerItemViewModel.cs" />
-    <Compile Include="ViewModels\SettingsDesignerItemData.cs" />
-    <Compile Include="ViewModels\SettingsDesignerItemViewModel.cs" />
     <Compile Include="ViewModels\ToolBoxViewModel.cs" />
     <Compile Include="ViewModels\Window1ViewModel.cs" />
     <Compile Include="Window1.xaml.cs">
@@ -219,14 +215,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\DesignerItems\InternalNodeItemDataTemplate.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\DesignerItems\PersistDesignerItemDataTemplate.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\DesignerItems\SettingsDesignerItemDataTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

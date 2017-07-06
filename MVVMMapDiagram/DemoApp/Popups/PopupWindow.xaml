@@ -1,7 +1,7 @@
-﻿<Window x:Class="DemoApp.PopupWindow"
+﻿<Window x:Class="MapDiagram.PopupWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Alter values" 
+        Title="Настройки компонента" 
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterOwner"
         x:Name="theView">

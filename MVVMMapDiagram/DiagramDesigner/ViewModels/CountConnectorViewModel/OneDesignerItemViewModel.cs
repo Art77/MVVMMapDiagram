@@ -10,7 +10,8 @@ namespace DiagramDesigner
     public abstract class OneDesignerItemViewModel : DesignerItemViewModelBase
     {
 
-        public OneDesignerItemViewModel(int id, IDiagramViewModel parent, double left, double top) : base(id, parent, left, top)
+        public OneDesignerItemViewModel(int id, DiagramViewModel parent, double left, double top,
+           double itemHeight, double itemWidth, double angle, string hostUrl) : base(id, parent, left, top, itemHeight, itemWidth, angle)
         { }
 
         public OneDesignerItemViewModel() : base()

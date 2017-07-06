@@ -11,16 +11,13 @@ namespace DiagramDesigner
     {
         private ObservableCollection<SelectableDesignerItemViewModelBase> items = new ObservableCollection<SelectableDesignerItemViewModelBase>();
 
-        public TwoDesignerBoxItemViewModel(int id, IDiagramViewModel parent, double left, double top) : base(id, parent, left, top)
+        public TwoDesignerBoxItemViewModel(int id, DiagramViewModel parent, double left, double top,
+           double itemHeight, double itemWidth, double angle, string hostUrl) : base(id, parent, left, top, itemHeight, itemWidth, angle)
         {
             AddItemCommand = new SimpleCommand(ExecuteAddItemCommand);
             RemoveItemCommand = new SimpleCommand(ExecuteRemoveItemCommand);
             ClearSelectedItemsCommand = new SimpleCommand(ExecuteClearSelectedItemsCommand);
             CreateNewDiagramCommand = new SimpleCommand(ExecuteCreateNewDiagramCommand);
-
-            this.ItemHeight = 35;
-            this.ItemWidth = 100;
-
            // Mediator.Instance.Register(this);
         }
 

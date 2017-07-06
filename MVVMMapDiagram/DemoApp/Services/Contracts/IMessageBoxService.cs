@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace DemoApp
+namespace MapDiagram
 {
     /// <summary>
     /// Available Button options. 

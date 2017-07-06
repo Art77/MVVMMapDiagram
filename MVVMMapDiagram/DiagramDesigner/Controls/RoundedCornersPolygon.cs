@@ -9,10 +9,22 @@ using System.Windows.Shapes;
 
 namespace DiagramDesigner.Controls
 {
+    /// <summary>
+    /// Режимы
+    /// </summary>
    public enum TypeShape
     {
+        /// <summary>
+        /// Замкнутый полигон
+        /// </summary>
         Polygon = 1,
+        /// <summary>
+        /// Ломанная линия
+        /// </summary>
         Polyline = 2,
+        /// <summary>
+        /// Неопределено
+        /// </summary>
         None = 0
     }
     
@@ -22,13 +34,31 @@ namespace DiagramDesigner.Controls
         protected List<Path> listCornerEllipse = new List<Path>();
         private Path _selectCornerEllips;
 
-        public event EventHandler UpSegment;
+        //public event EventHandler<EventCorner> AddCorner;
+        //public event EventHandler<EventCorner> DeleteCorner;
+        public event EventHandler CornerChange;
+
+
+        //protected virtual void OnAddCorner(EventCorner e)
+        //{
+        //    AddCorner?.Invoke(this, e);
+        //}
+
+        //protected virtual void OnDeleteCorner(EventCorner e)
+        //{
+        //    DeleteCorner?.Invoke(this, e);
+        //}
+
+        protected virtual void OnCorner()
+        {
+            CornerChange?.Invoke(this, EventArgs.Empty);
+        }
 
         #region DependencyProperty
 
         /// <summary>
-            /// The <see cref="TypeShape" /> dependency property's name.
-            /// </summary>
+        /// The <see cref="TypeShape" /> dependency property's name.
+        /// </summary>
         public const string TypeShapePropertyName = "TypeShape";
 
         /// <summary>
@@ -254,14 +284,14 @@ namespace DiagramDesigner.Controls
         {
             get
             {
-                UpSegment?.Invoke(this, EventArgs.Empty);
+                CornerChange?.Invoke(this, EventArgs.Empty);
                 return _points;
             }
             set
             {
                 if (_points != value)
                 {
-                    UpSegment?.Invoke(this, EventArgs.Empty);
+                    CornerChange?.Invoke(this, EventArgs.Empty);
                     _points = value;
                 }
             }
@@ -315,23 +345,6 @@ namespace DiagramDesigner.Controls
             typeof(RoundedCornersPolygon),
             new UIPropertyMetadata(false));
 
-        //private bool _useRoundnessPercentage;
-        ///// <summary>
-        ///// Gets or sets a value that specifies if the ArcRoundness property value will be used as a percentage of the connecting segment or not.
-        ///// </summary>
-        //public bool UseRoundnessPercentage
-        //{
-        //    get
-        //    {
-        //        return _useRoundnessPercentage;
-        //    }
-        //    set
-        //    {
-        //        _useRoundnessPercentage = value;
-        //        RedrawShape();
-        //    }
-        //}
-
         public Geometry Data
         {
             get
@@ -346,7 +359,12 @@ namespace DiagramDesigner.Controls
             geometry.Figures.Add(new PathFigure());
             _path = new Path { Data = geometry };
             Points = new PointCollection();
-            Points.Changed += Points_Changed;
+            this.Initialized += RoundedCornersPolygon_Initialized;
+        }
+
+        private void RoundedCornersPolygon_Initialized(object sender, EventArgs e)
+        {
+             Points.Changed += Points_Changed;
         }
 
         private void Points_Changed(object sender, EventArgs e)
@@ -402,6 +420,8 @@ namespace DiagramDesigner.Controls
                     }
                 }
                 parent.Children.Insert(index,GetCornerEllipse(point, index));
+                //EventCorner args = new EventCorner() { Tag = index, Point = point };
+                //OnAddCorner(args);
             }
         }
 

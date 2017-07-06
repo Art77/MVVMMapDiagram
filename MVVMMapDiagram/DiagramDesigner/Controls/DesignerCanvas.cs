@@ -93,7 +93,7 @@ namespace DiagramDesigner
                         {
                             vm.ClearSelectedItemsCommand.Execute(null);
                         }
-                        //   e.Handled = true;
+                       e.Handled = true; ///1
                     }
                 }
 
@@ -167,7 +167,7 @@ namespace DiagramDesigner
                         }
                     }
                 }
-                //  e.Handled = true;
+                 e.Handled = true;//2
             }
 
             private void HitTesting(Point hitPoint)
@@ -202,6 +202,5 @@ namespace DiagramDesigner
                 }
                 e.Handled = true;
             }
-
         }
     }

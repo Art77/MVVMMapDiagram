@@ -5,17 +5,19 @@ using System.Text;
 using DiagramDesigner;
 using System.Windows.Input;
 
-namespace DemoApp
+namespace MapDiagram
 {
     public class ODconnectorItemViewModel : OneDesignerItemViewModel, ISupportDataChanges
     {
         private IUIVisualizerService visualiserService;
 
-        public ODconnectorItemViewModel(int id, DiagramViewModel parent, double left, double top, string hostUrl) : base(id,parent, left,top)
+        public ODconnectorItemViewModel(int id, DiagramViewModel parent, double left, double top,
+           double itemHeight, double itemWidth, double angle, string hostUrl) : base(id, parent, left, top, itemHeight, itemWidth, angle, hostUrl)
         {
             this.HostUrl = hostUrl;
             Init_();
         }
+
 
         public ODconnectorItemViewModel() : base()
         {
@@ -28,7 +30,7 @@ namespace DemoApp
 
         public void ExecuteShowDataChangeWindowCommand(object parameter)
         {
-            PersistDesignerItemData data = new PersistDesignerItemData(HostUrl);
+            ODConnectorItemData data = new ODConnectorItemData(HostUrl);
             if (visualiserService.ShowDialog(data) == true)
             {
                 this.HostUrl = data.HostUrl;

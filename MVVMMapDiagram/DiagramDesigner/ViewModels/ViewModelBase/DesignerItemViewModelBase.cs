@@ -26,6 +26,10 @@ namespace DiagramDesigner
 
         double centerX = 0d;
         double centerY = 0d;
+
+        double lat = 0d;
+        double lon = 0d;
+
         private Transform transform;
 
         #endregion
@@ -41,16 +45,17 @@ namespace DiagramDesigner
             return element as DesignerCanvas;
         }
 
-
-        //public RelayCommand<RotateTransform> UpRotateTransform { get; private set; }
-
-        public DesignerItemViewModelBase(int id, IDiagramViewModel parent, double left, double top) : base(id, parent)
+        public DesignerItemViewModelBase(int id, IDiagramViewModel parent, double left, double top,
+            double itemHeight, double itemWidth, double angle) : base(id, parent)
         {
             SizeChange += new SizeChangeDelegate(OnSizeChange);
+
+            this.ItemHeight = itemHeight;
+            this.ItemWidth = itemWidth;
+            this.Angle = angle;
             this.left = left;
             this.top = top;
             Init();
-           
         }
 
 
@@ -207,6 +212,38 @@ namespace DiagramDesigner
                 {
                     top = value;
                     NotifyChanged("Top");
+                }
+            }
+        }
+
+        public double Latitude
+        {
+            get
+            {
+                return lat;
+            }
+            set
+            {
+                if (lat != value)
+                {
+                    lat = value;
+                    NotifyChanged("Latitude");
+                }
+            }
+        }
+
+        public double Longitude
+        {
+            get
+            {
+                return lon;
+            }
+            set
+            {
+                if (lon != value)
+                {
+                    lon = value;
+                    NotifyChanged("Longitude");
                 }
             }
         }

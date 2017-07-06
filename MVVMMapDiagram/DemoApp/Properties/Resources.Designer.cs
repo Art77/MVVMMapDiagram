@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DemoApp.Properties {
+namespace MapDiagram.Properties {
     using System;
     
     

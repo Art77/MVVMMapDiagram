@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 using DiagramDesigner.Helpers;
 using DiagramDesigner;
 
-namespace DemoApp
+namespace MapDiagram
 {
     public class ToolBoxViewModel
     {
@@ -17,8 +17,8 @@ namespace DemoApp
 
             toolBoxItems.Add(new ToolBoxData("../Images/lineGroupPanel.png", typeof(LineGrouItemViewModel)));
             toolBoxItems.Add(new ToolBoxData("../Images/ODConnectorPanel.png", typeof(ODconnectorItemViewModel)));
-            toolBoxItems.Add(new ToolBoxData("../Images/internalNodePanel.png", typeof(SettingsDesignerItemViewModel)));
-            toolBoxItems.Add(new ToolBoxData("../Images/nodePanel.png", typeof(TrafficLightIItemViewModel)));
+            toolBoxItems.Add(new ToolBoxData("../Images/internalNodePanel.png", typeof(InternalNodeItemViewModel)));
+            toolBoxItems.Add(new ToolBoxData("../Images/nodePanel.png", typeof(TrafficLightItemViewModel)));
         }
 
         public List<ToolBoxData> ToolBoxItems

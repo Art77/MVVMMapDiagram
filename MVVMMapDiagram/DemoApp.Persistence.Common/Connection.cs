@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace DemoApp.Persistence.Common
+namespace MapDiagram.Persistence.Common
 {
     public class Connection : PersistableItemBase
     {

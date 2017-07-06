@@ -24,18 +24,16 @@
                             x:Name="selectedGrid"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch">
- <!--ConfinesPoints="{Binding Path=ConnectionPoints}"--> 
                         <c:RoundedCornersPolygon x:Name="PART_Connector"
                                                 Stroke="Black"
                                                 StrokeThickness="1"
                                                 UseRoundnessPercentage="True"
                                                 Fill="Transparent"
-                                               
-                                                CornerSource="{Binding Path=CornerEdge}"
+                                                ConfinesPoints="{Binding Path=ConnectionPoints}"
                                                 Visibility="{Binding Path=VisibilityEdge, 
                                                                         Converter={x:Static s:BoolToVisibilityConverter.Instance}}">
 
-                            <i:Interaction.Triggers>
+                            <!--<i:Interaction.Triggers>
                                 <i:EventTrigger EventName="AddCorner">
                                     <cmd:EventToCommand Command="{Binding Path=UpPointSegmentCommand}"
                                                                           CommandParameter="{Binding ElementName=PART_Connector, Path=Points}"/>
@@ -45,12 +43,12 @@
                                     <cmd:EventToCommand Command="{Binding Path=UpPointSegmentCommand}"
                                                                           CommandParameter="{Binding ElementName=PART_Connector, Path=Points}"/>
                                 </i:EventTrigger>
-                                
-                                <i:EventTrigger EventName="EditCorner">
+
+                                <i:EventTrigger EventName="CornerChange">
                                     <cmd:EventToCommand Command="{Binding Path=UpPointSegmentCommand}"
                                                                           CommandParameter="{Binding ElementName=PART_Connector, Path=Points}"/>
                                 </i:EventTrigger>
-                            </i:Interaction.Triggers>
+                            </i:Interaction.Triggers>-->
                         </c:RoundedCornersPolygon>
 
                         <Path x:Name="arrow"

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace DemoApp
+namespace MapDiagram
 {
     /// <summary>
     /// This interface defines a UI controller which can be used to display dialogs

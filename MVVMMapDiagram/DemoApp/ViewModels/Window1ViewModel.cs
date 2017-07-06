@@ -7,10 +7,10 @@ using DiagramDesigner.Helpers;
 using DiagramDesigner;
 using System.ComponentModel;
 using System.Windows.Data;
-using DemoApp.Persistence.Common;
+using MapDiagram.Persistence.Common;
 using System.Threading.Tasks;
 
-namespace DemoApp
+namespace MapDiagram
 {
     public class Window1ViewModel : INPCBase
     {
@@ -41,12 +41,6 @@ namespace DemoApp
             CreateNewDiagramCommand = new SimpleCommand(ExecuteCreateNewDiagramCommand);
             SaveDiagramCommand = new SimpleCommand(ExecuteSaveDiagramCommand);
             LoadDiagramCommand = new SimpleCommand(ExecuteLoadDiagramCommand);
-
-
-            //OrthogonalPathFinder is a pretty bad attempt at finding path points, it just shows you, you can swap this out with relative
-            //ease if you wish just create a new IPathFinder class and pass it in right here
-            //ConnectorViewModel.PathFinder = new OrthogonalPathFinder();
-
         }
 
         public SimpleCommand DeleteSelectedItemsCommand { get; private set; }
@@ -149,8 +143,7 @@ namespace DemoApp
         }
 
         private void ExecuteCreateNewDiagramCommand(object parameter)
-        {
-            //ensure that itemsToRemove is cleared ready for any new changes within a session
+        { 
             itemsToRemove = new List<SelectableDesignerItemViewModelBase>();
             SavedDiagramId = null;
             DiagramViewModel.CreateNewDiagramCommand.Execute(null);
@@ -193,20 +186,58 @@ namespace DemoApp
                     //ensure that itemsToRemove is cleared ready for any new changes within a session
                     itemsToRemove = new List<SelectableDesignerItemViewModelBase>();
 
-                    //Save all PersistDesignerItemViewModel
-                    foreach (var persistItemVM in DiagramViewModel.Items.OfType<PersistDesignerItemViewModel>())
+                    //Save all InternalNodeItemViewModel
+                    foreach (var internalItemVM in DiagramViewModel.Items.OfType<InternalNodeItemViewModel>())
                     {
-                        PersistDesignerItem persistDesignerItem = new PersistDesignerItem(persistItemVM.Id, persistItemVM.Left, persistItemVM.Top, persistItemVM.HostUrl);
-                        persistItemVM.Id = databaseAccessService.SavePersistDesignerItem(persistDesignerItem);
-                        wholeDiagramToSave.DesignerItems.Add(new DiagramItemData(persistDesignerItem.Id, typeof(PersistDesignerItem)));
+                        InternalNodeItem internalNodeItem = 
+                        new InternalNodeItem(internalItemVM.Id, internalItemVM.Left, internalItemVM.Top, 
+                           internalItemVM.ItemHeight,  internalItemVM.ItemWidth, internalItemVM.Angle, internalItemVM.HostUrl);
+                        internalItemVM.Id = databaseAccessService.SaveInternalNodeItem(internalNodeItem);
+                        wholeDiagramToSave.DesignerItems.Add(new DiagramItemData(internalNodeItem.Id, typeof(InternalNodeItem)));
                     }
-                    //Save all PersistDesignerItemViewModel
-                    foreach (var settingsItemVM in DiagramViewModel.Items.OfType<SettingsDesignerItemViewModel>())
+
+                    //Save all LaneItemViewModel
+                    foreach (var laneItemVM in DiagramViewModel.Items.OfType<LaneItemViewModel>())
                     {
-                        SettingsDesignerItem settingsDesignerItem = new SettingsDesignerItem(settingsItemVM.Id, settingsItemVM.Left, settingsItemVM.Top, settingsItemVM.Setting1);
-                        settingsItemVM.Id = databaseAccessService.SaveSettingDesignerItem(settingsDesignerItem);
-                        wholeDiagramToSave.DesignerItems.Add(new DiagramItemData(settingsDesignerItem.Id, typeof(SettingsDesignerItem)));
+                        LaneItem laneItem = 
+                        new LaneItem(laneItemVM.Id, laneItemVM.Left, laneItemVM.Top, 
+                            laneItemVM.ItemHeight, laneItemVM.ItemWidth, laneItemVM.Angle, laneItemVM.HostUrl);
+                        laneItemVM.Id = databaseAccessService.SaveLaneItem(laneItem);
+                        wholeDiagramToSave.DesignerItems.Add(new DiagramItemData(laneItem.Id, typeof(LaneItem)));
                     }
+
+                    //Save all LineGrouItemViewModel
+                    foreach (var laneGroupItemVM in DiagramViewModel.Items.OfType<LineGrouItemViewModel>())
+                    {
+                        LineGroupItem laneItem =
+                        new LineGroupItem(laneGroupItemVM.Id, laneGroupItemVM.Left, laneGroupItemVM.Top,
+                            laneGroupItemVM.ItemHeight, laneGroupItemVM.ItemWidth, laneGroupItemVM.Angle, laneGroupItemVM.HostUrl);
+                        laneGroupItemVM.Id = databaseAccessService.SaveLineGroupItem(laneItem);
+                        wholeDiagramToSave.DesignerItems.Add(new DiagramItemData(laneItem.Id, typeof(LineGroupItem)));
+                    }
+
+                    //Save all TrafficLightItemViewModel
+                    foreach (var trafficLightItemVM in DiagramViewModel.Items.OfType<TrafficLightItemViewModel>())
+                    {
+                        TrafficLightItem trafficLightItem = 
+                        new TrafficLightItem(trafficLightItemVM.Id, trafficLightItemVM.Left, trafficLightItemVM.Top, 
+                        trafficLightItemVM.ItemHeight, trafficLightItemVM.ItemWidth, trafficLightItemVM.Angle, trafficLightItemVM.HostUrl);
+                        trafficLightItemVM.Id = databaseAccessService.SaveTrafficLightItem(trafficLightItem);
+                        wholeDiagramToSave.DesignerItems.Add(new DiagramItemData(trafficLightItem.Id, typeof(TrafficLightItem)));
+                    }
+
+
+                    //Save all ODConnectorItemViewModel
+                    foreach (var odConnectorItemVM in DiagramViewModel.Items.OfType<ODconnectorItemViewModel>())
+                    {
+                        ODConnectorItem odConnectorItem = 
+                        new ODConnectorItem(odConnectorItemVM.Id, odConnectorItemVM.Left, odConnectorItemVM.Top,
+                        odConnectorItemVM.ItemWidth, odConnectorItemVM.ItemHeight, odConnectorItemVM.Angle, odConnectorItemVM.HostUrl);
+                        odConnectorItemVM.Id = databaseAccessService.SaveODConnectorItem(odConnectorItem);
+                        wholeDiagramToSave.DesignerItems.Add(new DiagramItemData(odConnectorItem.Id, typeof(ODConnectorItem)));
+                    }
+
+ 
                     //Save all connections which should now have their Connection.DataItems filled in with correct Ids
                     foreach (var connectionVM in DiagramViewModel.Items.OfType<ConnectorViewModel>())
                     {
@@ -265,20 +296,55 @@ namespace DemoApp
                     //load diagram items
                     foreach (DiagramItemData diagramItemData in wholeDiagramToLoad.DesignerItems)
                     {
-                        if (diagramItemData.ItemType == typeof(PersistDesignerItem))
+
+                        if (diagramItemData.ItemType == typeof(InternalNodeItem))
                         {
-                            PersistDesignerItem persistedDesignerItem = databaseAccessService.FetchPersistDesignerItem(diagramItemData.ItemId);
-                            PersistDesignerItemViewModel persistDesignerItemViewModel =
-                                new PersistDesignerItemViewModel(persistedDesignerItem.Id, diagramViewModel, persistedDesignerItem.Left, persistedDesignerItem.Top, persistedDesignerItem.HostUrl);
-                            diagramViewModel.Items.Add(persistDesignerItemViewModel);
+                            InternalNodeItem internalNodeItem = databaseAccessService.FetchInternaNodeItem(diagramItemData.ItemId);
+                            InternalNodeItemViewModel internaNodeItemViewModel =
+                                new InternalNodeItemViewModel(internalNodeItem.Id, diagramViewModel, internalNodeItem.Left, internalNodeItem.Top,
+                                internalNodeItem.ItemHeight, internalNodeItem.ItemWidth, internalNodeItem.Angle, internalNodeItem.HostUrl);
+                            diagramViewModel.Items.Add(internaNodeItemViewModel);
                         }
-                        if (diagramItemData.ItemType == typeof(SettingsDesignerItem))
+
+                        if (diagramItemData.ItemType == typeof(LaneItem))
                         {
-                            SettingsDesignerItem settingsDesignerItem = databaseAccessService.FetchSettingsDesignerItem(diagramItemData.ItemId);
-                            SettingsDesignerItemViewModel settingsDesignerItemViewModel =
-                                new SettingsDesignerItemViewModel(settingsDesignerItem.Id, diagramViewModel, settingsDesignerItem.Left, settingsDesignerItem.Top, settingsDesignerItem.Setting1);
-                            diagramViewModel.Items.Add(settingsDesignerItemViewModel);
+                            LaneItem laneItem = databaseAccessService.FetchLaneItem(diagramItemData.ItemId);
+                            LaneItemViewModel laneItemViewModel =
+                                new LaneItemViewModel(laneItem.Id, diagramViewModel, laneItem.Left, laneItem.Top,
+                                 laneItem.ItemHeight, laneItem.ItemWidth, laneItem.Angle, laneItem.HostUrl);
+                            diagramViewModel.Items.Add(laneItemViewModel);
                         }
+
+                        if (diagramItemData.ItemType == typeof(LineGroupItem))
+                        {
+                            LineGroupItem lineGroupItem = databaseAccessService.FetchLineGroupItem(diagramItemData.ItemId);
+                            LineGrouItemViewModel lineGroupItemViewModel =
+                                new LineGrouItemViewModel(lineGroupItem.Id, diagramViewModel, lineGroupItem.Left, lineGroupItem.Top,
+                                lineGroupItem.ItemHeight,lineGroupItem.ItemWidth,  lineGroupItem.Angle, lineGroupItem.HostUrl);
+                            diagramViewModel.Items.Add(lineGroupItemViewModel);
+                        }
+
+
+                        if (diagramItemData.ItemType == typeof(ODConnectorItem))
+                        {
+                            ODConnectorItem odConnectorItem = databaseAccessService.FetchODConnectorItem(diagramItemData.ItemId);
+                            ODconnectorItemViewModel odConnectorItemViewModel =
+                                new ODconnectorItemViewModel(odConnectorItem.Id, diagramViewModel, odConnectorItem.Left, odConnectorItem.Top,
+                               odConnectorItem.ItemHeight,  odConnectorItem.ItemWidth, odConnectorItem.Angle, odConnectorItem.HostUrl);
+                            diagramViewModel.Items.Add(odConnectorItemViewModel);
+                        }
+
+
+                        if (diagramItemData.ItemType == typeof(TrafficLightItem))
+                        {
+                            TrafficLightItem trafficLightItem = databaseAccessService.FetchTrafficLightItem(diagramItemData.ItemId);
+                            TrafficLightItemViewModel trafficLightItemViewModel =
+                                new TrafficLightItemViewModel(trafficLightItem.Id, diagramViewModel, trafficLightItem.Left, trafficLightItem.Top,
+                                trafficLightItem.ItemHeight, trafficLightItem.ItemWidth, trafficLightItem.Angle, trafficLightItem.HostUrl);
+                            diagramViewModel.Items.Add(trafficLightItemViewModel);
+                        }
+
+
                     }
                     //load connection items
                     foreach (int connectionId in wholeDiagramToLoad.ConnectionIds)
@@ -330,15 +396,18 @@ namespace DemoApp
 
         private Type GetTypeOfDiagramItem(DesignerItemViewModelBase vmType)
         {
-            if (vmType is PersistDesignerItemViewModel)
-                return typeof(PersistDesignerItem);
-            if (vmType is SettingsDesignerItemViewModel)
-                return typeof(SettingsDesignerItem);
-
-            throw new InvalidOperationException(string.Format("Unknown diagram type. Currently only {0} and {1} are supported",
-                typeof(PersistDesignerItem).AssemblyQualifiedName,
-                typeof(SettingsDesignerItemViewModel).AssemblyQualifiedName
-                ));
+            if (vmType is InternalNodeItemViewModel)
+                return typeof(InternalNodeItem);
+            if (vmType is LaneItemViewModel)
+                return typeof(LaneItem);
+            if (vmType is LineGrouItemViewModel)
+                return typeof(LineGroupItem);
+            if (vmType is ODconnectorItemViewModel)
+                return typeof(ODConnectorItem);
+            if (vmType is TrafficLightItemViewModel)
+                return typeof(TrafficLightItem);
+           
+            throw new InvalidOperationException(string.Format("Unknown diagram type"));
 
         }
 
@@ -346,15 +415,33 @@ namespace DemoApp
         {
             DesignerItemViewModelBase dataItem = null;
 
-            if (connectorDataItemType == typeof(PersistDesignerItem))
+            //if (connectorDataItemType == typeof(PersistDesignerItem))
+            //{
+            //    dataItem = diagramViewModel.Items.OfType<PersistDesignerItemViewModel>().Single(x => x.Id == conectorDataItemId);
+            //}
+
+            if (connectorDataItemType == typeof(InternalNodeItem))
             {
-                dataItem = diagramViewModel.Items.OfType<PersistDesignerItemViewModel>().Single(x => x.Id == conectorDataItemId);
+                dataItem = diagramViewModel.Items.OfType<InternalNodeItemViewModel>().Single(x => x.Id == conectorDataItemId);
             }
 
-            if (connectorDataItemType == typeof(SettingsDesignerItem))
+            if (connectorDataItemType == typeof(LaneItem))
             {
-                dataItem = diagramViewModel.Items.OfType<SettingsDesignerItemViewModel>().Single(x => x.Id == conectorDataItemId);
+                dataItem = diagramViewModel.Items.OfType<LaneItemViewModel>().Single(x => x.Id == conectorDataItemId);
             }
+            if (connectorDataItemType == typeof(LineGroupItem))
+            {
+                dataItem = diagramViewModel.Items.OfType<LineGrouItemViewModel>().Single(x => x.Id == conectorDataItemId);
+            }
+            if (connectorDataItemType == typeof(ODConnectorItem))
+            {
+                dataItem = diagramViewModel.Items.OfType<ODconnectorItemViewModel>().Single(x => x.Id == conectorDataItemId);
+            }
+            if (connectorDataItemType == typeof(TrafficLightItem))
+            {
+                dataItem = diagramViewModel.Items.OfType<TrafficLightItemViewModel>().Single(x => x.Id == conectorDataItemId);
+            }
+
             return dataItem;
         }
 
@@ -413,18 +500,52 @@ namespace DemoApp
         {
 
             //make sure the item is removes from Diagram as well as removing them as individual items from database
-            if (itemToDelete is PersistDesignerItemViewModel)
+            if (itemToDelete is InternalNodeItemViewModel)
             {
-                DiagramItemData diagramItemToRemoveFromParent = wholeDiagramToAdjust.DesignerItems.Where(x => x.ItemId == itemToDelete.Id && x.ItemType == typeof(PersistDesignerItem)).Single();
+                DiagramItemData diagramItemToRemoveFromParent = wholeDiagramToAdjust.DesignerItems
+                    .Where(x => x.ItemId == itemToDelete.Id && x.ItemType == typeof(InternalNodeItem))
+                    .Single();
+
                 wholeDiagramToAdjust.DesignerItems.Remove(diagramItemToRemoveFromParent);
-                databaseAccessService.DeletePersistDesignerItem(itemToDelete.Id);
+                databaseAccessService.DeleteInternalNodeItem(itemToDelete.Id);
             }
-            if (itemToDelete is SettingsDesignerItemViewModel)
+            if (itemToDelete is LaneItemViewModel)
             {
-                DiagramItemData diagramItemToRemoveFromParent = wholeDiagramToAdjust.DesignerItems.Where(x => x.ItemId == itemToDelete.Id && x.ItemType == typeof(SettingsDesignerItem)).Single();
+                DiagramItemData diagramItemToRemoveFromParent = wholeDiagramToAdjust.DesignerItems
+                    .Where(x => x.ItemId == itemToDelete.Id && x.ItemType == typeof(LineGroupItem))
+                    .Single();
+
                 wholeDiagramToAdjust.DesignerItems.Remove(diagramItemToRemoveFromParent);
-                databaseAccessService.DeleteSettingDesignerItem(itemToDelete.Id);
+                databaseAccessService.DeleteLaneItem(itemToDelete.Id);
             }
+            if (itemToDelete is LineGrouItemViewModel)
+            {
+                DiagramItemData diagramItemToRemoveFromParent = wholeDiagramToAdjust.DesignerItems
+                    .Where(x => x.ItemId == itemToDelete.Id && x.ItemType == typeof(LineGrouItemData))
+                    .Single();
+
+                wholeDiagramToAdjust.DesignerItems.Remove(diagramItemToRemoveFromParent);
+                databaseAccessService.DeleteLineGroupItem(itemToDelete.Id);
+            }
+            if (itemToDelete is ODconnectorItemViewModel)
+            {
+                DiagramItemData diagramItemToRemoveFromParent = wholeDiagramToAdjust.DesignerItems
+                    .Where(x => x.ItemId == itemToDelete.Id && x.ItemType == typeof(ODConnectorItem))
+                    .Single();
+
+                wholeDiagramToAdjust.DesignerItems.Remove(diagramItemToRemoveFromParent);
+                databaseAccessService.DeleteODConnectorItem(itemToDelete.Id);
+            }
+            if (itemToDelete is TrafficLightItemViewModel)
+            {
+                DiagramItemData diagramItemToRemoveFromParent = wholeDiagramToAdjust.DesignerItems
+                    .Where(x => x.ItemId == itemToDelete.Id && x.ItemType == typeof(TrafficLightItem))
+                    .Single();
+
+                wholeDiagramToAdjust.DesignerItems.Remove(diagramItemToRemoveFromParent);
+                databaseAccessService.DeleteTrafficLingtItem(itemToDelete.Id);
+            }
+
             if (itemToDelete is ConnectorViewModel)
             {
                 wholeDiagramToAdjust.ConnectionIds.Remove(itemToDelete.Id);

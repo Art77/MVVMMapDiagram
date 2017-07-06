@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using Raven.Client.Embedded;
 using Raven.Client;
-using DemoApp.Persistence.Common;
+using MapDiagram.Persistence.Common;
 
-namespace DemoApp.Persistence.RavenDB
+namespace MapDiagram.Persistence.RavenDB
 {
     /// <summary>
     /// I decided to use RavenDB instead of SQL, to save people having to have SQL Server, and also
@@ -28,7 +28,7 @@ namespace DemoApp.Persistence.RavenDB
             };
             documentStore.Initialize();
         }
-            
+   
         public void DeleteConnection(int connectionId)
         {
             using (IDocumentSession session = documentStore.OpenSession())
@@ -55,18 +55,82 @@ namespace DemoApp.Persistence.RavenDB
             }
         }
 
-        public void DeleteSettingDesignerItem(int settingsDesignerItemId)
+        #region Удаление из БД  (по типу компонента)
+        public void DeleteInternalNodeItem(int internalNodeId)
         {
             using (IDocumentSession session = documentStore.OpenSession())
             {
-                IEnumerable<SettingsDesignerItem> settingItems = session.Query<SettingsDesignerItem>().Where(x => x.Id == settingsDesignerItemId);
-                foreach (var settingItem in settingItems)
+                IEnumerable<InternalNodeItem> internalNodeItems = 
+                    session.Query<InternalNodeItem>().Where(x => x.Id == internalNodeId);
+                foreach (var internalNode in internalNodeItems)
                 {
-                    session.Delete<SettingsDesignerItem>(settingItem);
+                    session.Delete<InternalNodeItem>(internalNode);
                 }
                 session.SaveChanges();
             }
         }
+
+
+
+        public void DeleteLaneItem(int laneId)
+        {
+            using (IDocumentSession session = documentStore.OpenSession())
+            {
+                IEnumerable<LaneItem> laneItems = 
+                    session.Query<LaneItem>().Where(x => x.Id == laneId);
+                foreach (var laneItem in laneItems)
+                {
+                    session.Delete<LaneItem>(laneItem);
+                }
+                session.SaveChanges();
+            }
+        }
+
+
+        public void DeleteLineGroupItem(int linegroupId)
+        {
+            using (IDocumentSession session = documentStore.OpenSession())
+            {
+                IEnumerable<LineGroupItem> lineGroupItems = 
+                    session.Query<LineGroupItem>().Where(x => x.Id == linegroupId);
+                foreach (var lineGroup in lineGroupItems)
+                {
+                    session.Delete<LineGroupItem>(lineGroup);
+                }
+                session.SaveChanges();
+            }
+        }
+
+
+        public void DeleteODConnectorItem(int odConnectorId)
+        {
+            using (IDocumentSession session = documentStore.OpenSession())
+            {
+                IEnumerable<ODConnectorItem> odConnectorItems = 
+                    session.Query<ODConnectorItem>().Where(x => x.Id == odConnectorId);
+                foreach (var odConnector in odConnectorItems)
+                {
+                    session.Delete<ODConnectorItem>(odConnector);
+                }
+                session.SaveChanges();
+            }
+        }
+
+
+        public void DeleteTrafficLingtItem(int trafficLingtId)
+        {
+            using (IDocumentSession session = documentStore.OpenSession())
+            {
+                IEnumerable<TrafficLightItem> trafficLingtItems = 
+                    session.Query<TrafficLightItem>().Where(x => x.Id == trafficLingtId);
+                foreach (var trafficLingt in trafficLingtItems)
+                {
+                    session.Delete<TrafficLightItem>(trafficLingt);
+                }
+                session.SaveChanges();
+            }
+        }
+        #endregion
 
         public int SaveDiagram(DiagramItem diagram)
         {
@@ -78,10 +142,33 @@ namespace DemoApp.Persistence.RavenDB
             return SaveItem(persistDesignerItemToSave);
         }
 
-        public int SaveSettingDesignerItem(SettingsDesignerItem settingsDesignerItemToSave)
+        #region Сохранение в БД (по типу компонента)
+
+        public int SaveInternalNodeItem(InternalNodeItem internalNodeItemToSave)
         {
-            return SaveItem(settingsDesignerItemToSave);
+            return SaveItem(internalNodeItemToSave);
         }
+
+        public int SaveLaneItem(LaneItem laneItemToSave)
+        {
+            return SaveItem(laneItemToSave);
+        }
+
+        public int SaveLineGroupItem(LineGroupItem lineGroupItemToSave)
+        {
+            return SaveItem(lineGroupItemToSave);
+        }
+
+        public int SaveODConnectorItem(ODConnectorItem  odConnectorItemToSave)
+        {
+            return SaveItem(odConnectorItemToSave);
+        }
+
+        public int SaveTrafficLightItem(TrafficLightItem trafficLightItemToSave)
+        {
+            return SaveItem(trafficLightItemToSave);
+        }
+        #endregion
 
         public int SaveConnection(Connection connectionToSave)
         {
@@ -112,13 +199,44 @@ namespace DemoApp.Persistence.RavenDB
             }
         }
 
-        public SettingsDesignerItem FetchSettingsDesignerItem(int settingsDesignerItemId)
+        #region Запросы к БД (относительно типа компонента)
+        public InternalNodeItem FetchInternaNodeItem(int internslNodeItemId)
         {
             using (IDocumentSession session = documentStore.OpenSession())
             {
-                return session.Query<SettingsDesignerItem>().Single(x => x.Id == settingsDesignerItemId);
+                return session.Query<InternalNodeItem>().Single(x => x.Id == internslNodeItemId);
             }
         }
+
+        public LaneItem FetchLaneItem(int laneItemId)
+        {
+            using (IDocumentSession session = documentStore.OpenSession())
+            {
+                return session.Query<LaneItem>().Single(x => x.Id == laneItemId);
+            }
+        }
+        public LineGroupItem FetchLineGroupItem(int lineGroupItemId)
+        {
+            using (IDocumentSession session = documentStore.OpenSession())
+            {
+                return session.Query<LineGroupItem>().Single(x => x.Id == lineGroupItemId);
+            }
+        }
+        public ODConnectorItem FetchODConnectorItem(int odConnectorItemId)
+        {
+            using (IDocumentSession session = documentStore.OpenSession())
+            {
+                return session.Query<ODConnectorItem>().Single(x => x.Id == odConnectorItemId);
+            }
+        }
+        public TrafficLightItem FetchTrafficLightItem(int trafficLightItemId)
+        {
+            using (IDocumentSession session = documentStore.OpenSession())
+            {
+                return session.Query<TrafficLightItem>().Single(x => x.Id == trafficLightItemId);
+            }
+        }
+        #endregion
 
         public Connection FetchConnection(int connectionId)
         {

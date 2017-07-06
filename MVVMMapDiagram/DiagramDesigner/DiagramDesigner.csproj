@@ -124,6 +124,7 @@
     <Compile Include="Controls\Zoom\AutoFitMode.cs" />
     <Compile Include="Controls\Zoom\MatrixHelper.cs" />
     <Compile Include="Controls\Zoom\ZoomBorder.cs" />
+    <Compile Include="Event\EventCorner.cs" />
     <Compile Include="Helpers\ConnectorInfo.cs" />
     <Compile Include="Converters\ConnectionPathConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
